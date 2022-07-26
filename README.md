@@ -1,1 +1,2 @@
-# DBMS_PRACTICAL
+## DBMS_PRACTICAL
+All the practicals of DBMS.
