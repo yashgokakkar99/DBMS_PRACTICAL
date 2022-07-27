@@ -1,2 +1,2 @@
 ## DBMS_PRACTICAL
-All the practicals of DBMS.
+All the Assignments of DBMS.
