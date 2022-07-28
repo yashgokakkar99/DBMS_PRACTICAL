@@ -1,6 +1,12 @@
 
 Assignment 1  --(25/07/22) and (26/07/22)
 
+/* b. Write at least 10 SQL queries on the suitable database application using SQL DML
+statements.
+Note: Instructor will design the queries which demonstrate the use of concepts like Insert, Select,
+Update, Delete with operators, functions, and set operator etc.
+*/
+
 Enter password: ********
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 8
