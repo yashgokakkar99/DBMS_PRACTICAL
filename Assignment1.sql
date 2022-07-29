@@ -35,9 +35,11 @@ mysql> show databases;
 +--------------------+
 6 rows in set (0.09 sec)
 
+-- creating a databse
 mysql> create database computer_student;
 Query OK, 1 row affected (0.03 sec)
 
+-- to check databses 
 mysql> show databases;
 +--------------------+
 | Database           |
@@ -54,9 +56,12 @@ mysql> show databases;
 
 mysql> use computer_student;
 Database changed
+
+-- creating table in mysql
 mysql> create table student_details (Roll_no int, Name char(30),Age int,City varchar(20), percentage float);
 Query OK, 0 rows affected (0.04 sec)
 
+-- inserting values into table
 mysql> insert into student_details values(101,'Aditya',20,'Pune',91.50);
 Query OK, 1 row affected (0.01 sec)
 
@@ -71,6 +76,7 @@ mysql> select * from student_details;
 mysql> insert into student_details values(102,'Aman',20,'Patna',95.50);
 Query OK, 1 row affected (0.01 sec)
 
+-- showing all the data from atble using select statement
 mysql> select * from student_details;
 +---------+--------+------+-------+------------+
 | Roll_no | Name   | Age  | City  | percentage |
@@ -80,6 +86,7 @@ mysql> select * from student_details;
 +---------+--------+------+-------+------------+
 2 rows in set (0.00 sec)
 
+-- inserting multiple values at a time
 mysql> insert into student_details values(103,'Akshat',21,'delhi',88.50),(104,'Ashutosh',22,'pune',97.8),(105,'Sarthak',20,'Gujarat',98.30);
 Query OK, 3 rows affected (0.01 sec)
 Records: 3  Duplicates: 0  Warnings: 0
@@ -171,6 +178,7 @@ mysql> select * from student_details where percentage>91.5 AND percentage<98.30;
 +---------+----------+------+-------+------------+
 2 rows in set (0.00 sec)
 
+-- Alter command for adding column ,deleting column ,modifying value and column rename.
 mysql> Alter table student_details add column Division char;
 Query OK, 0 rows affected (0.02 sec)
 Records: 0  Duplicates: 0  Warnings: 0
@@ -243,6 +251,7 @@ mysql> select * from student_details;
 +---------+----------+------+---------+------------+-------+
 6 rows in set (0.00 sec)
 
+-- updating the data 
 mysql> update student_details set Batch='A3' where City='Pune';
 Query OK, 2 rows affected (0.01 sec)
 Rows matched: 2  Changed: 2  Warnings: 0
@@ -311,6 +320,7 @@ mysql> select * from student_details;
 +---------+----------+------+---------+------------+
 6 rows in set (0.00 sec)
 
+-- delete the particluar data from the table
 mysql> delete from student_details where Roll_no=106;
 Query OK, 1 row affected (0.01 sec)
 
@@ -362,6 +372,7 @@ mysql> select * from abatch;
 +---------+---------+--------+--------+
 4 rows in set (0.02 sec)
 
+-- whole table data is deleted
 mysql> delete from abatch;
 Query OK, 4 rows affected (0.00 sec)
 
