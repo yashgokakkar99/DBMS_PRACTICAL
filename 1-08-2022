@@ -1,0 +1,300 @@
+ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.30-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| B1_data            |
+| BikeStore          |
+| Computer_student   |
+| Employee           |
+| NEMESIS            |
+| Princeton          |
+| Student1           |
+| TE                 |
+| TEB                |
+| b1                 |
+| client             |
+| companny           |
+| dsa                |
+| dyp                |
+| emp                |
+| employee1          |
+| information_schema |
+| k1                 |
+| madhuri            |
+| manga              |
+| mysql              |
+| p1                 |
+| performance_schema |
+| pubg               |
+| student1           |
+| suyash             |
+| sys                |
++--------------------+
+27 rows in set (0.00 sec)
+
+mysql> use Computer_student
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------------------+
+| Tables_in_Computer_student |
++----------------------------+
+| student                    |
+| student_details            |
+| students                   |
++----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student_details;
++---------+----------+------+---------+------------+---------+
+| Roll_no | Name     | Age  | City    | percentage | Address |
++---------+----------+------+---------+------------+---------+
+|     101 | Aditya   |   20 | pune    |       91.5 | NULL    |
+|     102 | Aman     |   20 | patna   |       95.5 | NULL    |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |
+|     104 | Ashutosh |   22 | Pune    |       97.8 | A       |
+|     105 | Sarthak  |   20 | Gujarat |       98.3 | NULL    |
++---------+----------+------+---------+------------+---------+
+6 rows in set (0.02 sec)
+
+mysql> Alter table student_details add prn varchar (20) NOT NULL;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_details;
++---------+----------+------+---------+------------+---------+-----+
+| Roll_no | Name     | Age  | City    | percentage | Address | prn |
++---------+----------+------+---------+------------+---------+-----+
+|     101 | Aditya   |   20 | pune    |       91.5 | NULL    |     |
+|     102 | Aman     |   20 | patna   |       95.5 | NULL    |     |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |     |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |     |
+|     104 | Ashutosh |   22 | Pune    |       97.8 | A       |     |
+|     105 | Sarthak  |   20 | Gujarat |       98.3 | NULL    |     |
++---------+----------+------+---------+------------+---------+-----+
+6 rows in set (0.00 sec)
+
+mysql> insert into student_details (prn) values ('72139471L');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student_details;
++---------+----------+------+---------+------------+---------+-----------+
+| Roll_no | Name     | Age  | City    | percentage | Address | prn       |
++---------+----------+------+---------+------------+---------+-----------+
+|     101 | Aditya   |   20 | pune    |       91.5 | NULL    |           |
+|     102 | Aman     |   20 | patna   |       95.5 | NULL    |           |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |           |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |           |
+|     104 | Ashutosh |   22 | Pune    |       97.8 | A       |           |
+|     105 | Sarthak  |   20 | Gujarat |       98.3 | NULL    |           |
+|    NULL | NULL     | NULL | NULL    |       NULL | NULL    | 72139471L |
++---------+----------+------+---------+------------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> insert into student_details (prn) values ('72139471L') where Name='Ashutosh';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where Name='Ashutosh'' at line 1
+mysql> update student_details set prn='72139471L' where Name='Ashutosh';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_details;
++---------+----------+------+---------+------------+---------+-----------+
+| Roll_no | Name     | Age  | City    | percentage | Address | prn       |
++---------+----------+------+---------+------------+---------+-----------+
+|     101 | Aditya   |   20 | pune    |       91.5 | NULL    |           |
+|     102 | Aman     |   20 | patna   |       95.5 | NULL    |           |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |           |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    |           |
+|     104 | Ashutosh |   22 | Pune    |       97.8 | A       | 72139471L |
+|     105 | Sarthak  |   20 | Gujarat |       98.3 | NULL    |           |
+|    NULL | NULL     | NULL | NULL    |       NULL | NULL    | 72139471L |
++---------+----------+------+---------+------------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> update student_details set prn='72139651Z' where City='delhi';
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from student_details;
++---------+----------+------+---------+------------+---------+-----------+
+| Roll_no | Name     | Age  | City    | percentage | Address | prn       |
++---------+----------+------+---------+------------+---------+-----------+
+|     101 | Aditya   |   20 | pune    |       91.5 | NULL    |           |
+|     102 | Aman     |   20 | patna   |       95.5 | NULL    |           |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    | 72139651Z |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    | 72139651Z |
+|     104 | Ashutosh |   22 | Pune    |       97.8 | A       | 72139471L |
+|     105 | Sarthak  |   20 | Gujarat |       98.3 | NULL    |           |
+|    NULL | NULL     | NULL | NULL    |       NULL | NULL    | 72139471L |
++---------+----------+------+---------+------------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------------------+
+| Tables_in_Computer_student |
++----------------------------+
+| student                    |
+| student_details            |
+| students                   |
++----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from students;
++------+----------+----------------+--------+
+| id   | Name     | roll_no        | Mobile |
++------+----------+----------------+--------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |
+|  103 | Aman     | TECOMP2223A003 | 887766 |
++------+----------+----------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> Alter table students  add prn varchar (20) NOT NULL;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----+
+| id   | Name     | roll_no        | Mobile | prn |
++------+----------+----------------+--------+-----+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 |     |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |     |
+|  103 | Aman     | TECOMP2223A003 | 887766 |     |
++------+----------+----------------+--------+-----+
+3 rows in set (0.00 sec)
+
+mysql> update students set prn='72139471L' where Name='Ashutosh';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+
+| id   | Name     | roll_no        | Mobile | prn       |
++------+----------+----------------+--------+-----------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           |
++------+----------+----------------+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> Alter table students  add parent_name varchar(20) unique;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name |
++------+----------+----------------+--------+-----------+-------------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | NULL        |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |
++------+----------+----------------+--------+-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> update students set parent_name='Anil' where Name='Ashutosh';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name |
++------+----------+----------------+--------+-----------+-------------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |
++------+----------+----------------+--------+-----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> update students set parent_name='Anil' where Name='Aryan';
+ERROR 1062 (23000): Duplicate entry 'Anil' for key 'students.parent_name'
+mysql> Alter table students  add age int check(age>18);
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  |
++------+----------+----------------+--------+-----------+-------------+------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        | NULL |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        | NULL |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        | NULL |
++------+----------+----------------+--------+-----------+-------------+------+
+3 rows in set (0.00 sec)
+
+mysql> update students set age=19 where Name='Aman';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  |
++------+----------+----------------+--------+-----------+-------------+------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        | NULL |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        | NULL |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |   19 |
++------+----------+----------------+--------+-----------+-------------+------+
+3 rows in set (0.00 sec)
+
+mysql> update students set age=17 where Name='Aryan';
+ERROR 3819 (HY000): Check constraint 'students_chk_1' is violated.
+mysql> update students set age=20 where Name='Ashutosh';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  |
++------+----------+----------------+--------+-----------+-------------+------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        |   20 |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        | NULL |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |   19 |
++------+----------+----------------+--------+-----------+-------------+------+
+3 rows in set (0.00 sec)
+
+mysql> Alter table students  add city varchar(15) default('pune');
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+------+------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  | city |
++------+----------+----------------+--------+-----------+-------------+------+------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        |   20 | pune |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        | NULL | pune |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |   19 | pune |
++------+----------+----------------+--------+-----------+-------------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> update students set city="nagpur" where Name='Aman';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+------+--------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  | city   |
++------+----------+----------------+--------+-----------+-------------+------+--------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        |   20 | pune   |
+|  102 | Aryan    | TECOMP2223A046 | 997755 |           | NULL        | NULL | pune   |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |   19 | nagpur |
++------+----------+----------------+--------+-----------+-------------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
