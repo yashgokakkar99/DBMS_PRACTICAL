@@ -11,8 +11,7 @@ owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-mysql> mysql -u root -p
-    -> ^C
+
 mysql> show databases;
 +--------------------+
 | Database           |
