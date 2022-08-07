@@ -30,8 +30,6 @@ mysql> show databases;
 +--------------------+
 7 rows in set (0.03 sec)
 
-mysql> use computer student
-ERROR 1049 (42000): Unknown database 'computer'
 mysql> use computer_student
 Database changed
 mysql> show tables;
@@ -44,22 +42,7 @@ mysql> show tables;
 +----------------------------+
 3 rows in set (0.02 sec)
 
-mysql> select * from students;
-+---------+----------+------+
-| Roll_no | Name     | Age  |
-+---------+----------+------+
-|     101 | Aditya   |   20 |
-|     102 | Aman     |   20 |
-|     103 | Akshat   |   21 |
-|     104 | Ashutosh |   22 |
-|     105 | Sarthak  |   20 |
-+---------+----------+------+
-5 rows in set (0.01 sec)
 
-mysql> Alter table students add column city varchar(20);
-ERROR 1347 (HY000): 'computer_student.students' is not BASE TABLE
-mysql> drop view students;
-Query OK, 0 rows affected (0.02 sec)
 
 mysql> show tables;
 +----------------------------+
@@ -97,8 +80,6 @@ mysql> select * from employee;
 mysql> create table department (Emp_id int,Dname varchar(20));
 Query OK, 0 rows affected (0.03 sec)
 
-mysql> insert into department(1,"Account"),(2,"sales"),(3,"Finance"),(4,"sales");
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,"Account"),(2,"sales"),(3,"Finance"),(4,"sales")' at line 1
 mysql> insert into department values(1,"Account"),(2,"sales"),(3,"Finance"),(4,"sales");
 Query OK, 4 rows affected (0.01 sec)
 Records: 4  Duplicates: 0  Warnings: 0
@@ -114,6 +95,7 @@ mysql> select * from department ;
 +--------+---------+
 4 rows in set (0.00 sec)
 
+--creating a view 
 mysql> CREATE view Emp_details as select Emp_id,Emp_name,city from employee;
 Query OK, 0 rows affected (0.01 sec)
 
@@ -127,6 +109,8 @@ mysql> select * from Emp_details;
 |      4 | sarthak  | nashik |
 +--------+----------+--------+
 4 rows in set (0.00 sec)
+
+
 
 mysql> create view Employeename as select Emp_id,Emp_name from employee;
 Query OK, 0 rows affected (0.01 sec)
@@ -142,39 +126,10 @@ mysql> select * from Employeename;
 +--------+----------+
 4 rows in set (0.00 sec)
 
-mysql> create view Employee_Departemnt as select Emp_id,Emp_name,Dname from employee,department;
-ERROR 1052 (23000): Column 'Emp_id' in field list is ambiguous
-mysql> create view Employee_Departemnt as selectemployee.Emp_id,employee.Emp_name,department.Dname from employee,department;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selectemployee.Emp_id,employee.Emp_name,department.Dname from employee,departmen' at line 1
-mysql> create view Employee_Departemnt as selectemployee.Emp_id,employee.Emp_name,department.Dname from employee,department where employee.Emp_id=department.Emp_id;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selectemployee.Emp_id,employee.Emp_name,department.Dname from employee,departmen' at line 1
-mysql> create view Employee_Departemnt as select employee.Emp_id,employee.Emp_name,department.Dname from employee,department;
-Query OK, 0 rows affected (0.01 sec)
+ --creating a view from two table
 
-mysql> select * from Employee_Department;
-ERROR 1146 (42S02): Table 'computer_student.employee_department' doesn't exist
-mysql> select * from Employee_Department;
-ERROR 1146 (42S02): Table 'computer_student.employee_department' doesn't exist
-mysql> show tables;
-+----------------------------+
-| Tables_in_computer_student |
-+----------------------------+
-| department                 |
-| emp_details                |
-| employee                   |
-| employee_departemnt        |
-| employeename               |
-| student_details            |
-+----------------------------+
-6 rows in set (0.00 sec)
-
-mysql> select * from employee_department;
-ERROR 1146 (42S02): Table 'computer_student.employee_department' doesn't exist
-mysql> select * from Employee_department;
-ERROR 1146 (42S02): Table 'computer_student.employee_department' doesn't exist
-mysql> create view Employee_Departemnt as select employee.Emp_id,employee.Emp_name,department.Dname from employee,department where employee.Emp_id=department.Emp_id;
-ERROR 1050 (42S01): Table 'Employee_Departemnt' already exists
-mysql> create view Employee_Depart_details as select employee.Emp_id,employee.Emp_name,department.Dname from employee,department where employee.Emp_id=department.Emp_id;
+mysql> create view Employee_Depart_details as select employee.Emp_id,employee.Emp_name,department.Dname from employee,department 
+       where employee.Emp_id=department.Emp_id;
 Query OK, 0 rows affected (0.01 sec)
 
 mysql> select * from Employee_Depart_details;
@@ -188,14 +143,11 @@ mysql> select * from Employee_Depart_details;
 +--------+----------+---------+
 4 rows in set (0.00 sec)
 
-mysql> insert into Emp_details (Emp_id,Emp_name,city) values(5,"Akshay","pune");
+/*mysql> insert into Emp_details (Emp_id,Emp_name,city) values(5,"Akshay","pune");
 ERROR 1423 (HY000): Field of view 'computer_student.emp_details' underlying table doesn't have a default value
 mysql> insert into Emp_details (Emp_id,Emp_name,city)values(5,"Akshay","pune");
-ERROR 1423 (HY000): Field of view 'computer_student.emp_details' underlying table doesn't have a default value
-mysql> insert into Employee_Depart_details (Emp_id,Emp_name,Dname)values(5,"Akshay","Technical");
-ERROR 1393 (HY000): Can not modify more than one base table through a join view 'computer_student.employee_depart_details'
-mysql> insert into Emp_details (Emp_id,Emp_name) values(5,"Akshay");
-ERROR 1423 (HY000): Field of view 'computer_student.emp_details' underlying table doesn't have a default value
+ERROR 1423 (HY000): Field of view 'computer_student.emp_details' underlying table doesn't have a default value*/
+
 mysql> select * from Emp_details;
 +--------+----------+--------+
 | Emp_id | Emp_name | city   |
@@ -207,6 +159,9 @@ mysql> select * from Emp_details;
 +--------+----------+--------+
 4 rows in set (0.00 sec)
 
+
+--Alter command in view 
+--Adding a column
 mysql> Alter view Emp_details as select Emp_id,Emp_name,city,age from employee;
 Query OK, 0 rows affected (0.01 sec)
 
@@ -221,6 +176,8 @@ mysql> select * from Emp_details;
 +--------+----------+--------+-----+
 4 rows in set (0.00 sec)
 
+
+--updating in view
 mysql> update Emp_details set age=22 where Emp_name="Aryan";
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
@@ -236,6 +193,8 @@ mysql> select * from Emp_details;
 +--------+----------+--------+-----+
 4 rows in set (0.00 sec)
 
+
+--delete command in view
 mysql> delete from Emp_details where age=22;
 Query OK, 1 row affected (0.01 sec)
 
@@ -249,12 +208,16 @@ mysql> select * from Emp_details;
 +--------+----------+--------+-----+
 3 rows in set (0.00 sec)
 
+
+--drop view
 mysql> drop view Employee_Depart_details;
 Query OK, 0 rows affected (0.01 sec)
 
 mysql> select * from Employee_Depart_details;
 ERROR 1146 (42S02): Table 'computer_student.employee_depart_details' doesn't exist
+
+
 mysql> Alter view Emp_details as select Emp_id,Emp_name,city,age from employee rename  age to Emp_age;
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'rename  age to Emp_age' at line 1
-mysql>
+mysql> 
 
