@@ -1,0 +1,184 @@
+ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.30-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| B1_data            |
+| BikeStore          |
+| Computer_student   |
+| Employee           |
+| NEMESIS            |
+| Princeton          |
+| Student1           |
+| TE                 |
+| TEB                |
+| b1                 |
+| bhaiPakka          |
+| client             |
+| companny           |
+| dsa                |
+| dyp                |
+| emp                |
+| employee           |
+| employee1          |
+| information_schema |
+| joins              |
+| k1                 |
+| madhuri            |
+| manga              |
+| mysql              |
+| p1                 |
+| performance_schema |
+| pubg               |
+| sourabh            |
+| student1           |
+| suraj              |
+| suyash             |
+| sys                |
++--------------------+
+32 rows in set (0.00 sec)
+
+mysql> use Computer_student
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------------------+
+| Tables_in_Computer_student |
++----------------------------+
+| student                    |
+| student_detail             |
+| student_details            |
+| students                   |
++----------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student_details;
++---------+----------+------+---------+------------+---------+-----------+
+| Roll_no | Name     | Age  | City    | percentage | Address | prn       |
++---------+----------+------+---------+------------+---------+-----------+
+|     101 | Aditya   |   20 | pune    |       91.5 | NULL    |           |
+|     102 | Aman     |   20 | patna   |       95.5 | NULL    |           |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    | 72139651Z |
+|     103 | Akshat   |   21 | delhi   |       88.5 | NULL    | 72139651Z |
+|     104 | Ashutosh |   22 | Pune    |       97.8 | A       | 72139471L |
+|     105 | Sarthak  |   20 | Gujarat |       98.3 | NULL    |           |
+|    NULL | NULL     | NULL | NULL    |       NULL | NULL    | 72139471L |
++---------+----------+------+---------+------------+---------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from student_detail;
++------+----------+----------------+--------+-----------+-------------+------+--------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  | city   |
++------+----------+----------------+--------+-----------+-------------+------+--------+
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |   19 | nagpur |
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        |   20 | pune   |
++------+----------+----------------+--------+-----------+-------------+------+--------+
+2 rows in set (0.02 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> select * from students;
++------+----------+----------------+--------+-----------+-------------+------+--------+
+| id   | Name     | roll_no        | Mobile | prn       | parent_name | age  | city   |
++------+----------+----------------+--------+-----------+-------------+------+--------+
+|  101 | Ashutosh | TECOMP2223A045 | 992242 | 72139471L | Anil        |   20 | pune   |
+|  103 | Aman     | TECOMP2223A003 | 887766 |           | NULL        |   19 | nagpur |
++------+----------+----------------+--------+-----------+-------------+------+--------+
+2 rows in set (0.01 sec)
+
+mysql> show views;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'views' at line 1
+mysql> CREATE TABLE employee(  
+    ->     name varchar(45) NOT NULL,    
+    ->     occupation varchar(35) NOT NULL,    
+    ->     working_date date,  
+    ->     working_hours varchar(10)  
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into employee values ('Robin', 'Scientist', '2020-10-04', 12),  
+    -> ('Warner', 'Engineer', '2020-10-04', 10),  
+    -> ('Peter', 'Actor', '2020-10-04', 13),  
+    -> ('Marco', 'Doctor', '2020-10-04', 14),  
+    -> ('Brayden', 'Teacher', '2020-10-04', 12),  
+    -> ('Antonio', 'Business', '2020-10-04', 11);  
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++---------+------------+--------------+---------------+
+| name    | occupation | working_date | working_hours |
++---------+------------+--------------+---------------+
+| Robin   | Scientist  | 2020-10-04   | 12            |
+| Warner  | Engineer   | 2020-10-04   | 10            |
+| Peter   | Actor      | 2020-10-04   | 13            |
+| Marco   | Doctor     | 2020-10-04   | 14            |
+| Brayden | Teacher    | 2020-10-04   | 12            |
+| Antonio | Business   | 2020-10-04   | 11            |
++---------+------------+--------------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select count(name) from employee;
++-------------+
+| count(name) |
++-------------+
+|           6 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(working_hours) from employee;
++--------------------+
+| sum(working_hours) |
++--------------------+
+|                 72 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(working_hours) from employee;
++--------------------+
+| avg(working_hours) |
++--------------------+
+|                 12 |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> select min(working_hours) from employee;
++--------------------+
+| min(working_hours) |
++--------------------+
+| 10                 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select max(working_hours) from employee;
++--------------------+
+| max(working_hours) |
++--------------------+
+| 14                 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select max(working_hours) as max_hour,min(working_hours) as min_hour from employee;
++----------+----------+
+| max_hour | min_hour |
++----------+----------+
+| 14       | 10       |
++----------+----------+
+1 row in set (0.00 sec)
+
