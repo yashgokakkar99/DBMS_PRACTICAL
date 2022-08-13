@@ -1,4 +1,10 @@
 Join in mysql
+
+/*JOINS are used to retrieve data from multiple tables in a single query. For JOINs to work, the tables need to be related to each other with a common key value.
+JOIN clauses are used in the SELECT, UPDATE, and DELETE statements.
+
+*/
+
 Enter password: ********
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 9
@@ -66,6 +72,16 @@ mysql> select * from userprofile;
 +------+------+-----------+-----------+-----------------------+--------------+
 4 rows in set (0.00 sec)
 
+
+--inner join
+/*INNER JOINs are used to fetch only common matching records. The INNER JOIN clause allows retrieving only those records from Table A and Table B, 
+that meet the join condition. It is the most widely used type of JOI*/
+
+/*synatx-SELECT columns
+FROM tableA 
+INNER JOIN tableB
+ON tableA.column = tableB.column;
+*/
 mysql> select t2.apid,t1.auid,t1.username,t2.firstname,t2.email,t1.password from users as t1 inner join
     -> userprofile as t2 where t1.auid=t2.auid;
 +------+------+----------+-----------+-----------------------+----------+
@@ -84,8 +100,6 @@ mysql> select * from users inner join userprofile where users.auid=userprofile.a
 +------+----------+----------+---------------------+----------+------+------+-----------+----------+-----------------------+--------------+
 1 row in set (0.00 sec)
 
-mysql> select * from users outer join userprofile where users.auid=userprofile.auid;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'outer join userprofile where users.auid=userprofile.auid' at line 1
 mysql> select * from users inner join userprofile where users.auid=userprofile.auid;
 +------+----------+----------+---------------------+----------+------+------+-----------+----------+-----------------------+--------------+
 | auid | username | password | createdate          | isActive | apid | auid | firstname | lastname | email                 | phone        |
@@ -94,6 +108,15 @@ mysql> select * from users inner join userprofile where users.auid=userprofile.a
 +------+----------+----------+---------------------+----------+------+------+-----------+----------+-----------------------+--------------+
 1 row in set (0.00 sec)
 
+
+--cross join
+/*MySQL CROSS JOIN, also known as a cartesian join, retrieves all combinations of rows from each table. In this type of JOIN, the result set is returned by multiplying each row of
+table A with all rows in table B if no additional condition is introduced.
+
+syntax-SELECT columns
+FROM tableA
+CROSS JOIN tableB;
+*/
 mysql> select * from users cross join userprofile ;
 +------+-----------+----------+---------------------+----------+------+------+-----------+-----------+-----------------------+--------------+
 | auid | username  | password | createdate          | isActive | apid | auid | firstname | lastname  | email                 | phone        |
@@ -117,12 +140,13 @@ mysql> select * from users cross join userprofile ;
 +------+-----------+----------+---------------------+----------+------+------+-----------+-----------+-----------------------+--------------+
 16 rows in set (0.00 sec)
 
-mysql> select * from users left join userprofile;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
-mysql> select * from users left join userprofile where users.auid=userprofile.auid;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where users.auid=userprofile.auid' at line 1
-mysql> select t1.auid,t1.username,t1.password,t2.firstname,t2.lastname from users as t1 left join userprofile as t2 where t1.auid=t2.auid;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where t1.auid=t2.auid' at line 1
+/*LEFT JOINs allow retrieving all records from Table A, along with those records from Table B for which the join condition is met. For the records from Table A that do not match the condition, the NULL values are displayed.
+
+SELECT columns
+FROM tableA
+LEFT [OUTER] JOIN tableB
+ON tableA.column = tableB.column;
+*/
 mysql> select t1.auid,t1.username,t1.password,t2.firstname,t2.lastname from users as t1 left join userprofile as t2 on  t1.auid=t2.auid;
 +------+-----------+----------+-----------+----------+
 | auid | username  | password | firstname | lastname |
@@ -133,6 +157,17 @@ mysql> select t1.auid,t1.username,t1.password,t2.firstname,t2.lastname from user
 |    6 | lexus1267 | 98hnfRT6 | NULL      | NULL     |
 +------+-----------+----------+-----------+----------+
 4 rows in set (0.00 sec)
+
+
+/* 
+Accordingly, RIGHT JOINs allow retrieving all records from Table B, along with those records from Table A for which the join condition is met. 
+For the records from Table B that do not match the condition, the NULL values are displayed.
+
+SELECT columns
+FROM tableA
+RIGHT [OUTER] JOIN tableB
+ON tableA.column = tableB.column;
+*/
 
 mysql> select t1.auid,t1.username,t1.password,t2.firstname,t2.lastname from users as t1 right join userprofile as t2 on  t1.auid=t2.auid;
 +------+----------+----------+-----------+-----------+
@@ -164,6 +199,8 @@ mysql> select * from users inner join userprofile using(auid);
 +------+----------+----------+---------------------+----------+------+-----------+----------+-----------------------+--------------+
 1 row in set (0.00 sec)
 
+
+--using
 mysql> select t1.auid,t1.username,t1.password,t2.firstname,t2.lastname from users as t1 right join userprofile as t2 using(auid);
 +------+----------+----------+-----------+-----------+
 | auid | username | password | firstname | lastname  |
