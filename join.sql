@@ -212,4 +212,4 @@ mysql> select t1.auid,t1.username,t1.password,t2.firstname,t2.lastname from user
 +------+----------+----------+-----------+-----------+
 4 rows in set (0.00 sec)
 
-mysql>
+
