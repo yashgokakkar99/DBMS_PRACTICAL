@@ -1,7 +1,7 @@
 Join in mysql
 
 /*JOINS are used to retrieve data from multiple tables in a single query. For JOINs to work, the tables need to be related to each other with a common key value.
-JOIN clauses are used in the SELECT, UPDATE, and DELETE statements.
+JOIN clauses are used in the SELECT, UPDATE, and DELETE statements...
 
 */
 
