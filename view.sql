@@ -37,8 +37,6 @@ mysql> select * from Emp_details;
 +--------+----------+--------+
 4 rows in set (0.00 sec)
 
-
-
 mysql> create view Employeename as select Emp_id,Emp_name from employee;
 Query OK, 0 rows affected (0.01 sec)
 
