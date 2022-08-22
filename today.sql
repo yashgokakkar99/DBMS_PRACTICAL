@@ -174,4 +174,175 @@ mysql>     SELECT emp_name, SUM(working_hours) AS "Total working hours"
 ERROR 1146 (42S02): Table 'Computer_student.employees' doesn't exist
 mysql> ^C
 mysql> 
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.29 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| computer_student   |
+| employee           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+7 rows in set (0.02 sec)
+
+mysql> use computer_student;
+Database changed
+mysql> show tables;
++----------------------------+
+| Tables_in_computer_student |
++----------------------------+
+| book                       |
+| department                 |
+| emp_details                |
+| employee                   |
+| employee_departemnt        |
+| employeename               |
+| student_details            |
+| supplier                   |
+| userprofile                |
+| users                      |
++----------------------------+
+10 rows in set (0.02 sec)
+
+mysql> select * from employee;
++--------+----------+--------+------------+-----+
+| Emp_id | Emp_name | city   | Emp_salary | age |
++--------+----------+--------+------------+-----+
+|      1 | Aman     | nagpur |      12000 |  20 |
+|      2 | Ashutosh | mumbai |      15000 |  21 |
+|      4 | sarthak  | nashik |      18000 |  21 |
++--------+----------+--------+------------+-----+
+3 rows in set (0.02 sec)
+
+mysql> Alter table employee add department varchar(20);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      1 | Aman     | nagpur |      12000 |  20 | NULL       |
+|      2 | Ashutosh | mumbai |      15000 |  21 | NULL       |
+|      4 | sarthak  | nashik |      18000 |  21 | NULL       |
++--------+----------+--------+------------+-----+------------+
+3 rows in set (0.00 sec)
+
+mysql> update employee set department="Comp" where age=21;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update employee set department="AIDS" where age=20;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      1 | Aman     | nagpur |      12000 |  20 | AIDS       |
+|      2 | Ashutosh | mumbai |      15000 |  21 | Comp       |
+|      4 | sarthak  | nashik |      18000 |  21 | Comp       |
++--------+----------+--------+------------+-----+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into employee values(5,"Aryan","pune",20000,20,"IT"),(6,"Swapnil","Pune",19000,22,"ENTC");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      1 | Aman     | nagpur |      12000 |  20 | AIDS       |
+|      2 | Ashutosh | mumbai |      15000 |  21 | Comp       |
+|      4 | sarthak  | nashik |      18000 |  21 | Comp       |
+|      5 | Aryan    | pune   |      20000 |  20 | IT         |
+|      6 | Swapnil  | Pune   |      19000 |  22 | ENTC       |
++--------+----------+--------+------------+-----+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee whereEmp_salary>(select salary from employee where Emp_id=2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>(select salary from employee where Emp_id=2)' at line 1
+mysql> select * from employee whereEmp_salary>(select salary from employee where Emp_id=2)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>(select salary from employee where Emp_id=2)' at line 1
+mysql> select * from employee where Emp_salary>(select salary from employee where Emp_id=2);
+ERROR 1054 (42S22): Unknown column 'salary' in 'field list'
+mysql> select * from employee where Emp_salary>(select Emp_salary from employee where Emp_id=2);
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      4 | sarthak  | nashik |      18000 |  21 | Comp       |
+|      5 | Aryan    | pune   |      20000 |  20 | IT         |
+|      6 | Swapnil  | Pune   |      19000 |  22 | ENTC       |
++--------+----------+--------+------------+-----+------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from employee where Emp_salary<=(select Emp_salary from employee where Emp_id=6);
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      1 | Aman     | nagpur |      12000 |  20 | AIDS       |
+|      2 | Ashutosh | mumbai |      15000 |  21 | Comp       |
+|      4 | sarthak  | nashik |      18000 |  21 | Comp       |
+|      6 | Swapnil  | Pune   |      19000 |  22 | ENTC       |
++--------+----------+--------+------------+-----+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee where Emp_salary=(select Emp_salary from employee where Emp_id=6);
++--------+----------+------+------------+-----+------------+
+| Emp_id | Emp_name | city | Emp_salary | age | department |
++--------+----------+------+------------+-----+------------+
+|      6 | Swapnil  | Pune |      19000 |  22 | ENTC       |
++--------+----------+------+------------+-----+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where department in select department from employee where Emp_id=2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select department from employee where Emp_id=2' at line 1
+mysql> select * from employee where department in (select department from employee where Emp_id=2);
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      2 | Ashutosh | mumbai |      15000 |  21 | Comp       |
+|      4 | sarthak  | nashik |      18000 |  21 | Comp       |
++--------+----------+--------+------------+-----+------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from employee where department not in (select department from employee where Emp_id=2);
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      1 | Aman     | nagpur |      12000 |  20 | AIDS       |
+|      5 | Aryan    | pune   |      20000 |  20 | IT         |
+|      6 | Swapnil  | Pune   |      19000 |  22 | ENTC       |
++--------+----------+--------+------------+-----+------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from employee where Emp_salary<(select Emp_salary from employee where Emp_id=4);
++--------+----------+--------+------------+-----+------------+
+| Emp_id | Emp_name | city   | Emp_salary | age | department |
++--------+----------+--------+------------+-----+------------+
+|      1 | Aman     | nagpur |      12000 |  20 | AIDS       |
+|      2 | Ashutosh | mumbai |      15000 |  21 | Comp       |
++--------+----------+--------+------------+-----+------------+
+2 rows in set (0.00 sec)
+
+mysql>
 
