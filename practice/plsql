@@ -16,3 +16,49 @@ a is not less than 20
 value of a is : 500
 
 PL/SQL procedure successfully completed.
+
+
+SQL> DECLARE
+  2     grade char(1) := 'A';
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Good');
+  8        when 'D' then dbms_output.put_line('Average');
+  9        when 'F' then dbms_output.put_line('Passed with Grace');
+ 10        else dbms_output.put_line('Failed');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Excellent
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2  i NUMBER := 1;
+  3  BEGIN
+  4  LOOP
+  5  EXIT WHEN i>10;
+  6  DBMS_OUTPUT.PUT_LINE(i);
+  7  i := i+1;
+  8  END LOOP;
+  9  END;
+ 10  /
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+
+
