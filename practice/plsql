@@ -1,1 +1,18 @@
+SQL> DECLARE
+  2     a number(3) := 500;
+  3  BEGIN
+  4     -- check the boolean condition using if statement
+  5     IF( a < 20 ) THEN
+  6        -- if condition is true then print the following
+  7        dbms_output.put_line('a is less than 20 ' );
+  8     ELSE
+  9        dbms_output.put_line('a is not less than 20 ' );
+ 10     END IF;
+ 11     dbms_output.put_line('value of a is : ' || a);
+ 12  END;
+ 13
+ 14  /
+a is not less than 20
+value of a is : 500
 
+PL/SQL procedure successfully completed.
