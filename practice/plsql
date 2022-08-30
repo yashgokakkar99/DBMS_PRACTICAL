@@ -81,4 +81,26 @@ SQL> DECLARE
 
 PL/SQL procedure successfully completed.
 
+//for loop
+SQL> DECLARE
+  2  VAR1 NUMBER;
+  3  BEGIN
+  4  VAR1:=10;
+  5  FOR VAR2 IN 1..10
+  6  LOOP
+  7  DBMS_OUTPUT.PUT_LINE (VAR1*VAR2);
+  8  END LOOP;
+  9  END;
+ 10  /
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
 
+PL/SQL procedure successfully completed.
