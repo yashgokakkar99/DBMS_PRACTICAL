@@ -17,13 +17,6 @@ Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
 Version 21.3.0.0.0
 
 SQL> SET SERVEROUT ON
-SQL> BEGIN
-  2  dbms_output.put_line (‘Hello World..');
-  3  END;
-  4  /
-ERROR:
-ORA-01756: quoted string not properly terminated
-
 
 SQL> BEGIN
   2  dbms_output.put_line ('Hello World..');
@@ -33,17 +26,6 @@ Hello World..
 
 PL/SQL procedure successfully completed.
 
-SQL> begin
-  2  dbms_output.put_line("hello world");
-  3  end;
-  4  /
-dbms_output.put_line("hello world");
-                      *
-ERROR at line 2:
-ORA-06550: line 2, column 23:
-PLS-00201: identifier 'hello world' must be declared
-ORA-06550: line 2, column 1:
-PL/SQL: Statement ignored
 
 
 SQL> begin
@@ -54,14 +36,6 @@ Hello World
 
 PL/SQL procedure successfully completed.
 
-SQL> @"C:\Users\Ashutosh Raj Gupta\Desktop\test.sql"
-ERROR:
-ORA-01756: quoted string not properly terminated
-
-
-SQL> @"C:\Users\Ashutosh Raj Gupta\Desktop\test.sql"
-ERROR:
-ORA-01756: quoted string not properly terminated
 
 
 SQL> @"C:\Users\Ashutosh Raj Gupta\Desktop\test.sql"
