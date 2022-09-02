@@ -1,3 +1,52 @@
+Microsoft Windows [Version 10.0.22000.856]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Ashutosh Raj Gupta>sqlplus
+
+SQL*Plus: Release 21.0.0.0.0 - Production on Tue Aug 30 15:00:51 2022
+Version 21.3.0.0.0
+
+Copyright (c) 1982, 2021, Oracle.  All rights reserved.
+
+Enter user-name: system
+Enter password:
+Last Successful login time: Tue Aug 30 2022 13:43:01 +05:30
+
+Connected to:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+SQL> SET SERVEROUT ON
+
+SQL> BEGIN
+  2  dbms_output.put_line ('Hello World..');
+  3  END;
+  4  /
+Hello World..
+
+PL/SQL procedure successfully completed.
+
+
+
+SQL> begin
+  2  dbms_output.put_line ('Hello World');
+  3  end;
+  4  /
+Hello World
+
+PL/SQL procedure successfully completed.
+
+
+
+SQL> @"C:\Users\Ashutosh Raj Gupta\Desktop\test.sql"
+Hello World..
+
+PL/SQL procedure successfully completed.
+
+SQL>
+
+
+
 SQL> DECLARE
   2     a number(3) := 500;
   3  BEGIN
@@ -18,6 +67,7 @@ value of a is : 500
 PL/SQL procedure successfully completed.
 
 
+
 SQL> DECLARE
   2     grade char(1) := 'A';
   3  BEGIN
@@ -34,6 +84,7 @@ SQL> DECLARE
 Excellent
 
 PL/SQL procedure successfully completed.
+
 
 SQL> DECLARE
   2  i NUMBER := 1;
@@ -58,6 +109,7 @@ SQL> DECLARE
 
 PL/SQL procedure successfully completed.
 
+
 SQL>
 SQL> DECLARE
   2  i INTEGER := 1;
@@ -80,6 +132,7 @@ SQL> DECLARE
 10
 
 PL/SQL procedure successfully completed.
+
 
 //for loop
 SQL> DECLARE
