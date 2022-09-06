@@ -157,3 +157,21 @@ SQL> DECLARE
 100
 
 PL/SQL procedure successfully completed.
+
+
+SQL> set serverout on
+SQL> edit prog
+
+SQL> @prog
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+
+PL/SQL procedure successfully completed.
