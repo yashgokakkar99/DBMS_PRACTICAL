@@ -71,6 +71,6 @@ output-
 PL/SQL procedure successfully completed.
 
 
-
+--delete from assignment_3b;
 
 
