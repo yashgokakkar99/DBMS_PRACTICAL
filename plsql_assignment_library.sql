@@ -31,7 +31,7 @@ BEGIN
 roll_number:=:roll_number;
 name1:=:name1;
 select Sysdate into System_date from dual;
-select doi into dateofissue from Borrowert where rollno=roll_number and nameOfBook=name1;
+select doi into dateofissue from borrower where rollno=roll_number and nameOfBook=name1;
 dbms_output.put_line(dateofissue);
 noOfDays:=System_date - dateofissue;
 dbms_output.put_line(noOfDays);
@@ -46,7 +46,7 @@ dbms_output.put_line('No fine');
 END IF;
 IF noOfDays>15 THEN
 INSERT INTO fines values(roll_number,Sysdate,amnt);
-UPDATE Borrowert set status ='r' where rollno=roll_number;
+UPDATE borrower set status ='r' where rollno=roll_number;
 END if;
 exception
 when no_data_found then
