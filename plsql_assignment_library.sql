@@ -5,13 +5,13 @@ create table Borrowert(rollno int,Name varchar(20),doi date,nameOfBook varchar(2
 create table fines(roll_no int,todaydate date,amnt int);
 
 insert into Borrowert values(01,'Aman','08-05-2022','DBMS','i');
-insert into Borrowert values(02,'Aryan','08-15-2022','TOC','i');
-insert into Borrowert values(03,'karan','08-23-2022','SPOS','i');
-insert into Borrowert values(04,'Rishu','08-29-2022','CNS','i');
+insert into Borrowert values(02,'Aryan','12-10-2022','TOC','i');
+insert into Borrowert values(03,'karan','08-06-2022','SPOS','i');
+insert into Borrowert values(04,'Rishu','18-09-2022','CNS','i');
 insert into Borrowert values(05,'Aashish','09-05-2022','SPM','i');
-insert into Borrowert values(06,'Swapnil','08-18-2022','TOC','i');
+insert into Borrowert values(06,'Swapnil','03-10-2022','TOC','i');
 insert into Borrowert values(07,'Sarthak','08-05-2022','DBMS','i');
-insert into Borrowert values(08,'Anubhav','08-12-2022','OOP','i');
+insert into Borrowert values(08,'Anubhav','23-11-2022','OOP','i');
 
 
 
@@ -31,7 +31,7 @@ BEGIN
 roll_number:=:roll_number;
 name1:=:name1;
 select Sysdate into System_date from dual;
-select doi into dateofissue from borrower where rollno=roll_number and nameOfBook=name1;
+select doi into dateofissue from borrowert where rollno=roll_number and nameOfBook=name1;
 dbms_output.put_line(dateofissue);
 noOfDays:=System_date - dateofissue;
 dbms_output.put_line(noOfDays);
@@ -46,7 +46,7 @@ dbms_output.put_line('No fine');
 END IF;
 IF noOfDays>15 THEN
 INSERT INTO fines values(roll_number,Sysdate,amnt);
-UPDATE borrower set status ='r' where rollno=roll_number;
+UPDATE borrowert set status ='r' where rollno=roll_number;
 END if;
 exception
 when no_data_found then
