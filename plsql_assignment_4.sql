@@ -2,37 +2,30 @@
 -- 9. Store the radius and the corresponding values of calculated area in an empty table named areas, 
 -- consisting of two columns, radius and area.
 
-SQL> set serverout on
-SQL> create table assignment(radius number,area number)
-  2  ;
 
-Table created.
+--CREATE TABLE circle_area (radius number, area number);
 
-SQL> declare
-  2      radius_var number;
-  3      area_var number;
-  4      pi number:=3.14;
-  5  begin
-  6      for radius_var in 5..9 loop
-  7          area_var:=pi*radius_var*radius_var;
-  8          dbms_output.put_line(area_var);
-  9          insert into assignment values(radius_var,area_var);
- 10      end loop;
- 11  end;
- 12  /
- 
- 
- output-
- 
-78.5
-113.04
-153.86
-200.96
-254.34
 
-PL/SQL procedure successfully completed.
+declare 
+radius_var number;
+area_var number;
+pi number:= 3.14;
+begin
+for radius_var in 5..9 loop
+area_var:=pi*radius_var*radius_var;
+dbms_output.put_line(area_var);
+insert into circle_area values(radius_var,area_var);
+end loop;
+end;
+/
 
-SQL> select * from assignment;
+
+select * from circle_area;
+
+
+
+
+SQL> select * from circle_area;
 
     RADIUS       AREA
 ---------- ----------
