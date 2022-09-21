@@ -1,0 +1,282 @@
+test> show dbs;
+admin   40.00 KiB
+config  84.00 KiB
+local   72.00 KiB
+test> use book
+switched to db book
+book> db.createCollection("Library");
+{ ok: 1 }
+book> db.library.insert({"b_id":1,"name":"c++"});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632b7e2c7cc2e1bbe2ecf610") }
+}
+book> db.library.insertOne({"b_id":2,"name":"Java"});
+{
+  acknowledged: true,
+  insertedId: ObjectId("632b7e987cc2e1bbe2ecf611")
+}
+book> db.library.insertOne({"b_id":3,"name":"DSA"});
+{
+  acknowledged: true,
+  insertedId: ObjectId("632b7eab7cc2e1bbe2ecf612")
+}
+book> db.library.find();
+[
+  { _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"), b_id: 1, name: 'c++' },
+  { _id: ObjectId("632b7e987cc2e1bbe2ecf611"), b_id: 2, name: 'Java' },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.find().pretty();
+[
+  { _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"), b_id: 1, name: 'c++' },
+  { _id: ObjectId("632b7e987cc2e1bbe2ecf611"), b_id: 2, name: 'Java' },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.find().pretty();
+[
+  { _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"), b_id: 1, name: 'c++' },
+  { _id: ObjectId("632b7e987cc2e1bbe2ecf611"), b_id: 2, name: 'Java' },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.update({"name":"Java"},{$set:{"name":"Java-jdk"}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+book> db.library.update({"name":"Java"},{$set:{"name":"Java-jdk"}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+book> db.library.update({"name":"c++"},{$set:{"name":"C++_7.0"}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+book> db.library.find();
+[
+  {
+    _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"),
+    b_id: 1,
+    name: 'C++_7.0'
+  },
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.find();
+[
+  {
+    _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"),
+    b_id: 1,
+    name: 'C++_7.0'
+  },
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.find().pretty();
+[
+  {
+    _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"),
+    b_id: 1,
+    name: 'C++_7.0'
+  },
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.remove({"b_id":1});
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+book> db.library.find();
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
+]
+book> db.library.find({"name":"DSA"})
+[ { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' } ]
+book> db.library.insert({"b_id":4,"name":"Java-jdk","desc":"fake book"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632b81de7cc2e1bbe2ecf613") }
+}
+book> db.library.find();
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  }
+]
+book> db.library.find({$or:[{"name":"Java-jdk"},{"name":"DSA"}]}).pretty();
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  }
+]
+book> db.library.find({$and:[{"name":"Java-jdk"},{"desc":"fake book"}]})
+[
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  }
+]
+book> db.library.find({$or:[{"name":"Java-jdk"},{"desc":"fake book"}]})
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  }
+]
+book> db.library.find({$or:[{"name":"Java-jdk"},{"name":"DSA"}]})
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  }
+]
+book> db.library.insert({"b_id":5,"name":"my story","cost":500});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632b843c7cc2e1bbe2ecf614") }
+}
+book> db.library.insert({"b_id":6,"name":"my story 2.0","cost":800});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632b84537cc2e1bbe2ecf615") }
+}
+book> db.library.insert({"b_id":7,"name":"my story 3.0","cost":50});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632b84617cc2e1bbe2ecf616") }
+}
+book> db.library.find({"cost":{$gte:100}})
+[
+  {
+    _id: ObjectId("632b843c7cc2e1bbe2ecf614"),
+    b_id: 5,
+    name: 'my story',
+    cost: 500
+  },
+  {
+    _id: ObjectId("632b84537cc2e1bbe2ecf615"),
+    b_id: 6,
+    name: 'my story 2.0',
+    cost: 800
+  }
+]
+book> db.library.find({"cost":{$lte:100}})
+[
+  {
+    _id: ObjectId("632b84617cc2e1bbe2ecf616"),
+    b_id: 7,
+    name: 'my story 3.0',
+    cost: 50
+  }
+]
+book> db.library.find({"cost":{$ete:100}})
+MongoServerError: unknown operator: $ete
+book> db.library.find({"cost":{$in:[100,200,300,500,800]}})
+[
+  {
+    _id: ObjectId("632b843c7cc2e1bbe2ecf614"),
+    b_id: 5,
+    name: 'my story',
+    cost: 500
+  },
+  {
+    _id: ObjectId("632b84537cc2e1bbe2ecf615"),
+    b_id: 6,
+    name: 'my story 2.0',
+    cost: 800
+  }
+]
+book> db.library.find({"cost":{$nin:[100,200,300,500,800]}})
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  },
+  {
+    _id: ObjectId("632b84617cc2e1bbe2ecf616"),
+    b_id: 7,
+    name: 'my story 3.0',
+    cost: 50
+  }
+]
+book> db.library.save({"_id":ObjectId("123456789abcdef123456789"),"b_id":8,"name":"save query","cost":1000})
+TypeError: db.library.save is not a function
+book> db.library.save({"_id":ObjectId("123456789abcdef123456789"),"b_id":8,"name":"save query","cost":1000});
+TypeError: db.library.save is not a function
+book> show collections;
+library
+Library
+book>
+
