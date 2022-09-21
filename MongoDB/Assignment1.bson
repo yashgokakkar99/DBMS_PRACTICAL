@@ -1,3 +1,8 @@
+MongoDB Queries:
+Design and Develop MongoDB Queries using CRUD operations. (Use CRUD operations,
+SAVE method, logical operators etc.)
+
+
 --to show all databases
 test> show dbs;
 admin   40.00 KiB
