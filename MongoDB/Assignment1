@@ -280,3 +280,11 @@ library
 Library
 book>
 
+test> use book
+switched to db book
+book> db.createCollection('notes')
+{ ok: 1 }
+
+book> db.notes.drop()
+true
+book>
