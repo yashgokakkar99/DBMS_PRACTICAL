@@ -1,0 +1,197 @@
+test> show dbs
+admin   40.00 KiB
+config  60.00 KiB
+local   72.00 KiB
+test> use book;
+switched to db book
+book> db.createCollection('library')
+{ ok: 1 }
+book> show dbs
+admin   40.00 KiB
+book     8.00 KiB
+config  60.00 KiB
+local   72.00 KiB
+book> use book
+already on db book
+book> for(i=0;i<200;++i){
+... db.library.insert({"student_id":i,"name":"Mark"});
+... }
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("632f48fbdd0bb7229d6e0dcf") }
+}
+book> db.library.find()
+[
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d08"),
+    student_id: 0,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d09"),
+    student_id: 1,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d0a"),
+    student_id: 2,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d0b"),
+    student_id: 3,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d0c"),
+    student_id: 4,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d0d"),
+    student_id: 5,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d0e"),
+    student_id: 6,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d0f"),
+    student_id: 7,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d10"),
+    student_id: 8,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d11"),
+    student_id: 9,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d12"),
+    student_id: 10,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d13"),
+    student_id: 11,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d14"),
+    student_id: 12,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d15"),
+    student_id: 13,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d16"),
+    student_id: 14,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d17"),
+    student_id: 15,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d18"),
+    student_id: 16,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d19"),
+    student_id: 17,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d1a"),
+    student_id: 18,
+    name: 'Mark'
+  },
+  {
+    _id: ObjectId("632f48fadd0bb7229d6e0d1b"),
+    student_id: 19,
+    name: 'Mark'
+  }
+]
+Type "it" for more
+book> db.library.find({"student_id":199});
+[
+  {
+    _id: ObjectId("632f48fbdd0bb7229d6e0dcf"),
+    student_id: 199,
+    name: 'Mark'
+  }
+]
+book> db.library.findOne({"student_id":200});
+null
+book> db.library.findOne({"student_id":190});
+{
+  _id: ObjectId("632f48fbdd0bb7229d6e0dc6"),
+  student_id: 190,
+  name: 'Mark'
+}
+book> db.library.newIndex({"student_id":1});
+TypeError: db.library.newIndex is not a function
+book> db.library.newIndex({"student_id":1})
+TypeError: db.library.newIndex is not a function
+book> db.library.createIndex({name:1},{name:"student_id"})
+student_id
+book> db.library.createIndex({name:1},{name:"student_id"});
+student_id
+book> db.library.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'student_id' }
+]
+book> db.library.createIndex({name:1},{name:"student_names"});
+MongoServerError: Index already exists with a different name: student_id
+book> db.library.newIndex({name:1},{name:"student_names"});
+TypeError: db.library.newIndex is not a function
+book> db.library.NewIndex({name:1},{name:"student_names"});
+TypeError: db.library.NewIndex is not a function
+book> db.library.Index({name:1},{name:"student_names"});
+TypeError: db.library.Index is not a function
+book> db.library.ensureIndex({name:1},{name:"student_names"});
+MongoServerError: Index already exists with a different name: student_id
+book> db.library.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'student_id' }
+]
+book> db.library.dropIndex("student_id")
+{ nIndexesWas: 2, ok: 1 }
+book> db.library.getIndexes()
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+book> db.library.ensureIndex({name:1},{name:"student_names"});
+[ 'student_names' ]
+book> db.library.ensureIndex({name:1},{name:"student_names"});
+[ 'student_names' ]
+book> db.library.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'student_names' }
+]
+book> db.library.ensureIndex({name:1},{name:"book_id"});
+MongoServerError: Index already exists with a different name: student_names
+book> db.library.ensuresIndex({name:1},{name:"book_id"});
+TypeError: db.library.ensuresIndex is not a function
+book> db.library.ensureIndex({name1:1},{name1:"book_id"});
+[ 'name1_1' ]
+book> db.library.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'student_names' },
+  { v: 2, key: { name1: 1 }, name: 'name1_1' }
+]
+book> 
