@@ -454,3 +454,76 @@ book> db.student_details.find().sort({marks:-1})
   }
 ]
 
+
+book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$min:"$marks"}}}])
+[
+  { _id: 'dbms', marks: 60 },
+  { _id: 'cns', marks: 95 },
+  { _id: 'spm', marks: 85 },
+  { _id: 'oop', marks: 72 },
+  { _id: 'dsa', marks: 82 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$max:"$marks"}}}])
+[
+  { _id: 'dbms', marks: 70 },
+  { _id: 'cns', marks: 95 },
+  { _id: 'spm', marks: 85 },
+  { _id: 'oop', marks: 72 },
+  { _id: 'dsa', marks: 90 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$avg:"$marks"}}}])
+[
+  { _id: 'dbms', marks: 65 },
+  { _id: 'cns', marks: 95 },
+  { _id: 'spm', marks: 85 },
+  { _id: 'oop', marks: 72 },
+  { _id: 'dsa', marks: 86 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$first:"$marks"}}}])
+[
+  { _id: 'dbms', marks: 70 },
+  { _id: 'cns', marks: 95 },
+  { _id: 'spm', marks: 85 },
+  { _id: 'oop', marks: 72 },
+  { _id: 'dsa', marks: 82 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$last:"$marks"}}}])
+[
+  { _id: 'dbms', marks: 60 },
+  { _id: 'cns', marks: 95 },
+  { _id: 'spm', marks: 85 },
+  { _id: 'oop', marks: 72 },
+  { _id: 'dsa', marks: 90 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}}])
+[
+  { _id: 'dbms', marks: 130 },
+  { _id: 'cns', marks: 95 },
+  { _id: 'spm', marks: 85 },
+  { _id: 'oop', marks: 72 },
+  { _id: 'dsa', marks: 172 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',count:{$sum:1}}}])
+[
+  { _id: 'dbms', count: 2 },
+  { _id: 'cns', count: 1 },
+  { _id: 'spm', count: 1 },
+  { _id: 'oop', count: 1 },
+  { _id: 'dsa', count: 2 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',count:{$sum:-1}}}])
+[
+  { _id: 'dbms', count: -2 },
+  { _id: 'cns', count: -1 },
+  { _id: 'spm', count: -1 },
+  { _id: 'oop', count: -1 },
+  { _id: 'dsa', count: -2 }
+]
+book> db.student_details.aggregate([{$group:{_id:'$subject',count:{$sum:1}}}])
+[
+  { _id: 'dbms', count: 2 },
+  { _id: 'cns', count: 1 },
+  { _id: 'spm', count: 1 },
+  { _id: 'oop', count: 1 },
+  { _id: 'dsa', count: 2 }
+]
