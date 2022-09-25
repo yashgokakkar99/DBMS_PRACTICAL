@@ -133,18 +133,16 @@ book> db.library.find({"student_id":199});
     name: 'Mark'
   }
 ]
-book> db.library.findOne({"student_id":200});
-null
+
+
 book> db.library.findOne({"student_id":190});
 {
   _id: ObjectId("632f48fbdd0bb7229d6e0dc6"),
   student_id: 190,
   name: 'Mark'
 }
-book> db.library.newIndex({"student_id":1});
-TypeError: db.library.newIndex is not a function
-book> db.library.newIndex({"student_id":1})
-TypeError: db.library.newIndex is not a function
+
+
 book> db.library.createIndex({name:1},{name:"student_id"})
 student_id
 book> db.library.createIndex({name:1},{name:"student_id"});
@@ -154,16 +152,9 @@ book> db.library.getIndexes()
   { v: 2, key: { _id: 1 }, name: '_id_' },
   { v: 2, key: { name: 1 }, name: 'student_id' }
 ]
-book> db.library.createIndex({name:1},{name:"student_names"});
-MongoServerError: Index already exists with a different name: student_id
-book> db.library.newIndex({name:1},{name:"student_names"});
-TypeError: db.library.newIndex is not a function
-book> db.library.NewIndex({name:1},{name:"student_names"});
-TypeError: db.library.NewIndex is not a function
-book> db.library.Index({name:1},{name:"student_names"});
-TypeError: db.library.Index is not a function
-book> db.library.ensureIndex({name:1},{name:"student_names"});
-MongoServerError: Index already exists with a different name: student_id
+
+
+
 book> db.library.getIndexes()
 [
   { v: 2, key: { _id: 1 }, name: '_id_' },
@@ -175,17 +166,15 @@ book> db.library.getIndexes()
 [ { v: 2, key: { _id: 1 }, name: '_id_' } ]
 book> db.library.ensureIndex({name:1},{name:"student_names"});
 [ 'student_names' ]
-book> db.library.ensureIndex({name:1},{name:"student_names"});
-[ 'student_names' ]
+
+
 book> db.library.getIndexes()
 [
   { v: 2, key: { _id: 1 }, name: '_id_' },
   { v: 2, key: { name: 1 }, name: 'student_names' }
 ]
-book> db.library.ensureIndex({name:1},{name:"book_id"});
-MongoServerError: Index already exists with a different name: student_names
-book> db.library.ensuresIndex({name:1},{name:"book_id"});
-TypeError: db.library.ensuresIndex is not a function
+
+
 book> db.library.ensureIndex({name1:1},{name1:"book_id"});
 [ 'name1_1' ]
 book> db.library.getIndexes()
@@ -196,6 +185,9 @@ book> db.library.getIndexes()
 ]
 book> 
 
+
+
+--Indexing
 
 
 
@@ -288,8 +280,8 @@ book> db.student_details.find()
     marks: 85
   }
 ]
-book> db.createIndex({name:1})
-TypeError: db.createIndex is not a function
+
+
 book> db.student_details.createIndex({name:1})
 name_1
 book> db.student_details.getIndexes()
@@ -454,6 +446,8 @@ book> db.student_details.find().sort({marks:-1})
   }
 ]
 
+
+--Agreegate function
 
 book> db.student_details.aggregate([{$group:{_id:'$subject',marks:{$min:"$marks"}}}])
 [
