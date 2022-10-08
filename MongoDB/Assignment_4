@@ -87,6 +87,7 @@ print()
 
 # finding specific field using key value pair
 print(" find specific field, using specific key & value : ")
+print("student having age as 20 :")
 for data in student.find({'age':"20"}):
     print(data)
 print()
@@ -104,7 +105,7 @@ student.update_one(
         }
     }
 )
-print("updated the record :Aman")
+print("updated the record :Aman set age 23")
 print(student.find_one({'name':'Aman'}))
 print()
 
@@ -112,11 +113,11 @@ print()
 student.update_many({},
     {
         "$set":{
-            'Pursing_year':2022
+            'Pursuing_year':2022
         }
     }
 )
-print("updates all the record: ")
+print("updates all the record: adding pursuing year")
 for data in student.find({}):
     print(data)
 print()
@@ -140,13 +141,11 @@ for data in student.find({}):
     print(data)
     
 # droping database
-print("Current databses are: ")
+print("Current databses are having collection: ")
 db_list = client.list_database_names()
 print("database names :",db_list)
 print()
-print("Databases after deleting college")
+print("Databases after deleting collection")
 client.drop_database('college')
 db_list = client.list_database_names()
 print("database names :",db_list)
-
-
