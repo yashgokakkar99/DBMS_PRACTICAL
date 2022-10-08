@@ -2,8 +2,10 @@ test> show dbs
 admin   40.00 KiB
 config  60.00 KiB
 local   72.00 KiB
+
 test> use book;
 switched to db book
+
 book> db.createCollection('library')
 { ok: 1 }
 book> show dbs
@@ -11,6 +13,7 @@ admin   40.00 KiB
 book     8.00 KiB
 config  60.00 KiB
 local   72.00 KiB
+
 book> use book
 already on db book
 book> for(i=0;i<200;++i){
@@ -125,6 +128,8 @@ book> db.library.find()
   }
 ]
 Type "it" for more
+
+
 book> db.library.find({"student_id":199});
 [
   {
@@ -142,11 +147,12 @@ book> db.library.findOne({"student_id":190});
   name: 'Mark'
 }
 
-
+---creating an index
 book> db.library.createIndex({name:1},{name:"student_id"})
 student_id
-book> db.library.createIndex({name:1},{name:"student_id"});
-student_id
+
+
+--getting an index
 book> db.library.getIndexes()
 [
   { v: 2, key: { _id: 1 }, name: '_id_' },
@@ -154,16 +160,16 @@ book> db.library.getIndexes()
 ]
 
 
-
-book> db.library.getIndexes()
-[
-  { v: 2, key: { _id: 1 }, name: '_id_' },
-  { v: 2, key: { name: 1 }, name: 'student_id' }
-]
+---droping an index
 book> db.library.dropIndex("student_id")
 { nIndexesWas: 2, ok: 1 }
+
+
 book> db.library.getIndexes()
 [ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+
+
+---creating an index using ensureIndex method.
 book> db.library.ensureIndex({name:1},{name:"student_names"});
 [ 'student_names' ]
 
@@ -177,6 +183,8 @@ book> db.library.getIndexes()
 
 book> db.library.ensureIndex({name1:1},{name1:"book_id"});
 [ 'name1_1' ]
+
+
 book> db.library.getIndexes()
 [
   { v: 2, key: { _id: 1 }, name: '_id_' },
