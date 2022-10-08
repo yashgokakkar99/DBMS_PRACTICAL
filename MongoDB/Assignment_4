@@ -11,14 +11,15 @@ print("database names :",db_list)
 # creating a database name college and showing
 database=client.college
 print('database created name college')
-db_list = client.list_database_names()
-print("database names :",db_list)
+print()
+
 
 # creating a collection name student
 student=database.student
+print("Collection named student is created. ")
+print()
 
 #creating Dictionary,single student data
-
 student1={
     'roll_no':"001",
     'name':"Ashok",
@@ -30,14 +31,6 @@ student1={
     'addresss':"Mumbai",
 }
 
-#inserting single student data using insert_one() method
-student.insert_one(student1)
-print("\n single filed inserted in Student collection.")
-
-# Displaying single data by using find_one method
-print(student.find_one())
-print()
-'''
 # creating a list, multiple data inserting in collection student
 student2=[
     {
@@ -71,6 +64,16 @@ student2=[
     'addresss':"Nagpur",
 }
  ]
+
+#inserting single student data using insert_one() method
+student.insert_one(student1)
+print("\n single filed inserted in Student collection.")
+
+# Displaying single data by using find_one method
+print(student.find_one())
+print()
+
+
 
 #inserting multiple data using insert_many() method.
 student.insert_many(student2)
@@ -137,9 +140,13 @@ for data in student.find({}):
     print(data)
     
 # droping database
+print("Current databses are: ")
+db_list = client.list_database_names()
+print("database names :",db_list)
+print()
+print("Databases after deleting college")
 client.drop_database('college')
 db_list = client.list_database_names()
 print("database names :",db_list)
-'''
 
 
