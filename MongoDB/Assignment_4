@@ -1,1 +1,145 @@
+#import Module
+from pymongo import MongoClient
+
+# creation of Mongoclient,connect with port number and host to Mongodb
+client=MongoClient("mongodb://localhost:27017/")
+
+#showing all database
+db_list = client.list_database_names()
+print("database names :",db_list)
+
+# creating a database name college and showing
+database=client.college
+print('database created name college')
+db_list = client.list_database_names()
+print("database names :",db_list)
+
+# creating a collection name student
+student=database.student
+
+#creating Dictionary,single student data
+
+student1={
+    'roll_no':"001",
+    'name':"Ashok",
+    'age':"20",
+    'course':{
+        'coursename':'Engineering',
+        'duration':"4 years",
+    },
+    'addresss':"Mumbai",
+}
+
+#inserting single student data using insert_one() method
+student.insert_one(student1)
+print("\n single filed inserted in Student collection.")
+
+# Displaying single data by using find_one method
+print(student.find_one())
+print()
+'''
+# creating a list, multiple data inserting in collection student
+student2=[
+    {
+    'roll_no':"002",
+    'name':"Aman",
+    'age':"21",
+    'course':{
+        'coursename':'Engineering',
+        'duration':"4 years",
+    },
+    'addresss':"Patna",
+},
+    {
+    'roll_no':"003",
+    'name':"Aryan",
+    'age':"22",
+    'course':{
+        'coursename':'Engineering',
+        'duration':"4 years",
+    },
+    'addresss':"Mumbai",
+},
+    {
+    'roll_no':"004",
+    'name':"Ashutosh",
+    'age':"20",
+    'course':{
+        'coursename':'Engineering',
+        'duration':"4 years",
+    },
+    'addresss':"Nagpur",
+}
+ ]
+
+#inserting multiple data using insert_many() method.
+student.insert_many(student2)
+print("\n Multiple field inserted in collection Student. ")
+
+# displaying multiple data using find() method
+for data in student.find({}):
+    print(data)
+print()
+
+
+# finding specific field using key value pair
+print(" find specific field, using specific key & value : ")
+for data in student.find({'age':"20"}):
+    print(data)
+print()
+
+
+
+# updating specific field using update_one()
+student.update_one(
+    {
+        'name':'Aman'
+    },
+    {
+        "$set":{
+            'age':'23'
+        }
+    }
+)
+print("updated the record :Aman")
+print(student.find_one({'name':'Aman'}))
+print()
+
+# updating Student collection fields using update_many()
+student.update_many({},
+    {
+        "$set":{
+            'Pursing_year':2022
+        }
+    }
+)
+print("updates all the record: ")
+for data in student.find({}):
+    print(data)
+print()
+
+
+# Delete specific field using key value and method delete_one()
+student.delete_one({'name':'Ashok'})
+print("Deleted the record with name Ashok")
+print()
+print("remaining record after deletion")
+for data in student.find({}):
+    print(data)
+print()
+
+
+# deleting student collection fields using method delete_many()
+student.delete_many({})
+print("All records are deleted.")
+print()
+for data in student.find({}):
+    print(data)
+    
+# droping database
+client.drop_database('college')
+db_list = client.list_database_names()
+print("database names :",db_list)
+'''
+
 
