@@ -17,15 +17,16 @@ switched to db book
 book> db.createCollection("Library");
 { ok: 1 }
 
-inserting into Collection
+
+---inserting into Collection
 book> db.library.insert({"b_id":1,"name":"c++"});
-DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
 {
   acknowledged: true,
   insertedIds: { '0': ObjectId("632b7e2c7cc2e1bbe2ecf610") }
 }
 
-insertOne-insert only one value
+
+---insertOne-insert only one value
 book> db.library.insertOne({"b_id":2,"name":"Java"});
 {
   acknowledged: true,
@@ -38,6 +39,7 @@ book> db.library.insertOne({"b_id":3,"name":"DSA"});
 }
 
 
+
 --read the value 
 book> db.library.find();
 [
@@ -46,7 +48,7 @@ book> db.library.find();
   { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
 ]
 
-
+---find().pretty()==>gives output in a beauty way.
 book> db.library.find().pretty();
 [
   { _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"), b_id: 1, name: 'c++' },
@@ -55,9 +57,9 @@ book> db.library.find().pretty();
 ]
 
 
---updating Collection
+---updating Collection
+---$set==>it is used to update the value // it is in key value pair
 book> db.library.update({"name":"Java"},{$set:{"name":"Java-jdk"}});
-DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
 {
   acknowledged: true,
   insertedId: null,
@@ -75,6 +77,8 @@ book> db.library.update({"name":"c++"},{$set:{"name":"C++_7.0"}});
   modifiedCount: 1,
   upsertedCount: 0
 }
+
+
 book> db.library.find();
 [
   {
@@ -89,26 +93,15 @@ book> db.library.find();
   },
   { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
 ]
-book> db.library.find();
-[
-  {
-    _id: ObjectId("632b7e2c7cc2e1bbe2ecf610"),
-    b_id: 1,
-    name: 'C++_7.0'
-  },
-  {
-    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
-    b_id: 2,
-    name: 'Java-jdk'
-  },
-  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' }
-]
+
 
 
 --remove data from collection or removing a document
 book> db.library.remove({"b_id":1});
-DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+
 { acknowledged: true, deletedCount: 1 }
+
+--after removing document
 book> db.library.find();
 [
   {
@@ -123,12 +116,16 @@ book> db.library.find();
 book> db.library.find({"name":"DSA"})
 [ { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' } ]
 
+
+
 --inserting
 book> db.library.insert({"b_id":4,"name":"Java-jdk","desc":"fake book"});
 {
   acknowledged: true,
   insertedIds: { '0': ObjectId("632b81de7cc2e1bbe2ecf613") }
 }
+
+
 book> db.library.find();
 [
   {
@@ -145,6 +142,7 @@ book> db.library.find();
   }
 ]
 
+
 --logical operators
 1.or
 
@@ -155,7 +153,10 @@ book> db.library.find({$or:[{"name":"Java-jdk"},{"name":"DSA"}]}).pretty();
     b_id: 2,
     name: 'Java-jdk'
   },
-  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), 
+  b_id: 3, 
+  name: 'DSA' 
+  },
   {
     _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
     b_id: 4,
@@ -163,6 +164,7 @@ book> db.library.find({$or:[{"name":"Java-jdk"},{"name":"DSA"}]}).pretty();
     desc: 'fake book'
   }
 ]
+
 
 book> db.library.find({$or:[{"name":"Java-jdk"},{"desc":"fake book"}]})
 [
@@ -179,22 +181,6 @@ book> db.library.find({$or:[{"name":"Java-jdk"},{"desc":"fake book"}]})
   }
 ]
 
-
-book> db.library.find({$or:[{"name":"Java-jdk"},{"name":"DSA"}]})
-[
-  {
-    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
-    b_id: 2,
-    name: 'Java-jdk'
-  },
-  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
-  {
-    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
-    b_id: 4,
-    name: 'Java-jdk',
-    desc: 'fake book'
-  }
-]
 
 
 2.and
@@ -226,6 +212,7 @@ book> db.library.insert({"b_id":7,"name":"my story 3.0","cost":50});
   acknowledged: true,
   insertedIds: { '0': ObjectId("632b84617cc2e1bbe2ecf616") }
 }
+
 
 --greater than
 book> db.library.find({"cost":{$gte:100}})
