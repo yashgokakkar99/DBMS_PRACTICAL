@@ -143,6 +143,47 @@ book> db.library.find();
 ]
 
 
+
+
+
+
+book> db.library.find()
+[
+  {
+    _id: ObjectId("632b7e987cc2e1bbe2ecf611"),
+    b_id: 2,
+    name: 'Java-jdk'
+  },
+  { _id: ObjectId("632b7eab7cc2e1bbe2ecf612"), b_id: 3, name: 'DSA' },
+  {
+    _id: ObjectId("632b81de7cc2e1bbe2ecf613"),
+    b_id: 4,
+    name: 'Java-jdk',
+    desc: 'fake book'
+  },
+  {
+    _id: ObjectId("632b843c7cc2e1bbe2ecf614"),
+    b_id: 5,
+    name: 'my story',
+    cost: 500
+  },
+  {
+    _id: ObjectId("632b84537cc2e1bbe2ecf615"),
+    b_id: 6,
+    name: 'my story 2.0',
+    cost: 800
+  },
+  {
+    _id: ObjectId("632b84617cc2e1bbe2ecf616"),
+    b_id: 7,
+    name: 'my story 3.0',
+    cost: 50
+  }
+]
+
+
+
+
 --logical operators
 1.or
 
