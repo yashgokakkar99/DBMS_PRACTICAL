@@ -1,1 +1,149 @@
+test> show dbs
+admin   40.00 KiB
+book    80.00 KiB
+config  60.00 KiB
+local   80.00 KiB
+test> use book
+switched to db book
+book> show collections
+library
+Library
+book> db.createCollection('student')
+{ ok: 1 }
+book> db.student.insertOne({"name":"Aryan","language":"Java"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644c011bf6101d8529e05")
+}
+book> db.student.insertOne({"name":"Ashutosh","language":"Python"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644d011bf6101d8529e06")
+}
+book> db.student.insertOne({"name":"Aman","language":"C++"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644e411bf6101d8529e07")
+}
+book> db.student.insertOne({"name":"Swapnil","language":"C"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644f911bf6101d8529e08")
+}
+book> db.student.find().pretty()
+[
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  },
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  }
+]
+book> db.student.createIndex({name:1})
+name_1
+book> db.student.createIndex({language:-1})
+language_-1
+book> db.student.createIndex({name:1,language:-1})
+name_1_language_-1
+book> db.student.dropIndex({language:-1})
+{ nIndexesWas: 4, ok: 1 }
+book> db.student.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' },
+  { v: 2, key: { name: 1, language: -1 }, name: 'name_1_language_-1' }
+]
+book> db.student.find().sort({name:1})
+[
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  },
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  }
+]
+book> db.student.find().sort({name:-1})
+[
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  },
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  }
+]
+book> db.student.find().sort({language:-1})
+[
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  },
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  }
+]
+book> db.student_details.createIndex({language:-1})
+language_-1
+book> db.student_details.find()
+
+book> show collections
+library
+Library
+student
+student_details
+book>
 
