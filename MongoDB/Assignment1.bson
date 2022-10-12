@@ -181,9 +181,6 @@ book> db.library.find()
   }
 ]
 
-
-
-
 --logical operators
 1.or
 
