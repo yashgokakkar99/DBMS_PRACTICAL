@@ -1,0 +1,189 @@
+
+test> show dbs
+Assignment   72.00 KiB
+admin        40.00 KiB
+book        204.00 KiB
+config       96.00 KiB
+local        80.00 KiB
+test> use Assignment
+switched to db Assignment
+Assignment> show collections
+students
+Assignment> db.students.find()
+[
+  {
+    _id: ObjectId("634ab6e5081889d5c5be79f6"),
+    id: 1,
+    name: 'Aman',
+    age: 20,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab73e081889d5c5be79f7"),
+    id: 2,
+    name: 'Asheesh',
+    age: 22,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab759081889d5c5be79f8"),
+    id: 3,
+    name: 'Anil',
+    age: 21,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab771081889d5c5be79f9"),
+    id: 4,
+    name: 'Aryan',
+    age: 30,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab788081889d5c5be79fa"),
+    id: 5,
+    name: 'Swapnil',
+    age: 37,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab7b3081889d5c5be79fb"),
+    id: 6,
+    name: 'Shubham',
+    age: 34,
+    section: 'B'
+  }
+]
+Assignment> db.students.aggregate([{$match:{sec:"B"}},{$count:"Totalstudent in sec:B"}])
+
+Assignment> db.students.aggregate([{$group: {_id:"$sec", total_st: {$sum:1}, max_agemax_age:{$max:"$age"} } }])
+[ { _id: null, total_st: 6, max_age: 37 } ]
+Assignment> db.students.aggregate([{$match:{age:{$gt:30}}}])
+[
+  {
+    _id: ObjectId("634ab788081889d5c5be79fa"),
+    id: 5,
+    name: 'Swapnil',
+    age: 37,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab7b3081889d5c5be79fb"),
+    id: 6,
+    name: 'Shubham',
+    age: 34,
+    section: 'B'
+  }
+]
+Assignment>
+
+Assignment>
+
+Assignment>
+
+Assignment>
+
+Assignment>
+
+Assignment>
+
+Assignment> db.students.aggregate([{'$sort': {'age': 1}}])
+[
+  {
+    _id: ObjectId("634ab6e5081889d5c5be79f6"),
+    id: 1,
+    name: 'Aman',
+    age: 20,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab759081889d5c5be79f8"),
+    id: 3,
+    name: 'Anil',
+    age: 21,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab73e081889d5c5be79f7"),
+    id: 2,
+    name: 'Asheesh',
+    age: 22,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab771081889d5c5be79f9"),
+    id: 4,
+    name: 'Aryan',
+    age: 30,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab7b3081889d5c5be79fb"),
+    id: 6,
+    name: 'Shubham',
+    age: 34,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab788081889d5c5be79fa"),
+    id: 5,
+    name: 'Swapnil',
+    age: 37,
+    section: 'A'
+  }
+]
+Assignment>
+
+Assignment> db.students.aggregate([{$match:{sec:"B"}},{'$sort': {'age': -1}},{$limit$limit:1}])
+
+Assignment> db.students.aggregate([{$unwind:"$subject"}])
+
+Assignment> db.students.aggregate([{$unwind:"$subject"}])
+
+Assignment> db.students.aggregate([{$unwind:"$name"}])
+[
+  {
+    _id: ObjectId("634ab6e5081889d5c5be79f6"),
+    id: 1,
+    name: 'Aman',
+    age: 20,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab73e081889d5c5be79f7"),
+    id: 2,
+    name: 'Asheesh',
+    age: 22,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab759081889d5c5be79f8"),
+    id: 3,
+    name: 'Anil',
+    age: 21,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab771081889d5c5be79f9"),
+    id: 4,
+    name: 'Aryan',
+    age: 30,
+    section: 'B'
+  },
+  {
+    _id: ObjectId("634ab788081889d5c5be79fa"),
+    id: 5,
+    name: 'Swapnil',
+    age: 37,
+    section: 'A'
+  },
+  {
+    _id: ObjectId("634ab7b3081889d5c5be79fb"),
+    id: 6,
+    name: 'Shubham',
+    age: 34,
+    section: 'B'
+  }
+]
+Assignment>
+
