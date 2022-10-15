@@ -149,3 +149,60 @@ print("Databases after deleting collection")
 client.drop_database('college')
 db_list = client.list_database_names()
 print("database names :",db_list)
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+output-
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\Ashutosh Raj Gupta\Desktop\python_projects\mongodb> python -u "c:\Users\Ashutosh Raj Gupta\Desktop\python_projects\mongodb\mongo.py"
+database names : ['Assignment', 'admin', 'book', 'config', 'local']
+database created name college
+
+Collection named student is created. 
+
+
+ single filed inserted in Student collection.
+{'_id': ObjectId('634af4232e43671e6e09b776'), 'roll_no': '001', 'name': 'Ashok', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai'}
+
+
+ Multiple field inserted in collection Student. 
+{'_id': ObjectId('634af4232e43671e6e09b776'), 'roll_no': '001', 'name': 'Ashok', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai'}
+{'_id': ObjectId('634af4232e43671e6e09b777'), 'roll_no': '002', 'name': 'Aman', 'age': '21', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Patna'}
+{'_id': ObjectId('634af4232e43671e6e09b778'), 'roll_no': '003', 'name': 'Aryan', 'age': '22', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai'}
+{'_id': ObjectId('634af4232e43671e6e09b779'), 'roll_no': '004', 'name': 'Ashutosh', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Nagpur'}
+
+ find specific field, using specific key & value : 
+{'_id': ObjectId('634af4232e43671e6e09b776'), 'roll_no': '001', 'name': 'Ashok', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai'}
+{'_id': ObjectId('634af4232e43671e6e09b779'), 'roll_no': '004', 'name': 'Ashutosh', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Nagpur'}
+
+updated the record :Aman
+{'_id': ObjectId('634af4232e43671e6e09b777'), 'roll_no': '002', 'name': 'Aman', 'age': '23', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Patna'}
+
+updates all the record:
+{'_id': ObjectId('634af4232e43671e6e09b776'), 'roll_no': '001', 'name': 'Ashok', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai', 'Pursing_year': 2022}
+{'_id': ObjectId('634af4232e43671e6e09b777'), 'roll_no': '002', 'name': 'Aman', 'age': '23', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Patna', 'Pursing_year': 2022}
+{'_id': ObjectId('634af4232e43671e6e09b778'), 'roll_no': '003', 'name': 'Aryan', 'age': '22', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai', 'Pursing_year': 2022}
+{'_id': ObjectId('634af4232e43671e6e09b779'), 'roll_no': '004', 'name': 'Ashutosh', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Nagpur', 'Pursing_year': 2022}
+
+Deleted the record with name Ashok
+
+remaining record after deletion
+{'_id': ObjectId('634af4232e43671e6e09b777'), 'roll_no': '002', 'name': 'Aman', 'age': '23', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Patna', 'Pursing_year': 2022}
+{'_id': ObjectId('634af4232e43671e6e09b778'), 'roll_no': '003', 'name': 'Aryan', 'age': '22', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Mumbai', 'Pursing_year': 2022}
+{'_id': ObjectId('634af4232e43671e6e09b779'), 'roll_no': '004', 'name': 'Ashutosh', 'age': '20', 'course': {'coursename': 'Engineering', 'duration': '4 years'}, 'addresss': 'Nagpur', 'Pursing_year': 2022}
+
+All records are deleted.
+
+Current databses are:
+database names : ['Assignment', 'admin', 'book', 'college', 'config', 'local']
+
+Databases after deleting college
+database names : ['Assignment', 'admin', 'book', 'config', 'local']
+PS C:\Users\Ashutosh Raj Gupta\Desktop\python_projects\mongodb> 
