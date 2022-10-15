@@ -1,15 +1,25 @@
+//to show all the databases
+
 test> show dbs
 admin   40.00 KiB
 book    80.00 KiB
 config  60.00 KiB
 local   80.00 KiB
+
+//to ue a database
 test> use book
 switched to db book
+
+//to show all the connections
 book> show collections
 library
 Library
+
+//creating a collection name student
 book> db.createCollection('student')
 { ok: 1 }
+
+//inserting document in collection using insertOne
 book> db.student.insertOne({"name":"Aryan","language":"Java"})
 {
   acknowledged: true,
@@ -30,6 +40,9 @@ book> db.student.insertOne({"name":"Swapnil","language":"C"})
   acknowledged: true,
   insertedId: ObjectId("634644f911bf6101d8529e08")
 }
+
+
+// to find all the document in the collection using find() function
 book> db.student.find().pretty()
 [
   {
@@ -53,20 +66,35 @@ book> db.student.find().pretty()
     language: 'C'
   }
 ]
+
+
+//  creating index
 book> db.student.createIndex({name:1})
 name_1
+
+// cfeating index with descending value
 book> db.student.createIndex({language:-1})
 language_-1
+
+// creating index on multiple key
 book> db.student.createIndex({name:1,language:-1})
 name_1_language_-1
+
+
+// droping a index
 book> db.student.dropIndex({language:-1})
 { nIndexesWas: 4, ok: 1 }
+
+
+// tp get all the indexes use getIndexes function
 book> db.student.getIndexes()
 [
   { v: 2, key: { _id: 1 }, name: '_id_' },
   { v: 2, key: { name: 1 }, name: 'name_1' },
   { v: 2, key: { name: 1, language: -1 }, name: 'name_1_language_-1' }
 ]
+
+// sort according to name in asscending order
 book> db.student.find().sort({name:1})
 [
   {
@@ -90,6 +118,9 @@ book> db.student.find().sort({name:1})
     language: 'C'
   }
 ]
+
+
+// sort name in descending order
 book> db.student.find().sort({name:-1})
 [
   {
@@ -136,14 +167,12 @@ book> db.student.find().sort({language:-1})
     language: 'C'
   }
 ]
+
+
+
 book> db.student_details.createIndex({language:-1})
 language_-1
 book> db.student_details.find()
 
-book> show collections
-library
-Library
-student
-student_details
-book>
+
 
