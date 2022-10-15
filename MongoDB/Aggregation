@@ -31,11 +31,17 @@ admin        40.00 KiB
 book        204.00 KiB
 config       72.00 KiB
 local        80.00 KiB
+
+
 test> use Assignment
 switched to db Assignment
+
 Assignment> show collections
 students
+
 Assignment> db.createCollection('student')
+
+
 Assignment> db.student.insertOne({"roll":1,"name":"Aman","age":20,"subject":"DBMS","marks":70})
 {
   acknowledged: true,
@@ -71,6 +77,9 @@ Assignment> db.student.insertOne({"roll":7,"name":"Swapnil","age":27,"subject":"
   acknowledged: true,
   insertedId: ObjectId("634ad11e4bb5b13ca322b6d2")
 }
+
+//printing
+
 Assignment> db.student.find()
 [
   {
@@ -130,6 +139,9 @@ Assignment> db.student.find()
     marks: 92
   }
 ]
+
+// sorting with age in ascending order
+
 Assignment> db.student.aggregate([{'$sort':{'age':1}}])
 [
   {
@@ -189,6 +201,8 @@ Assignment> db.student.aggregate([{'$sort':{'age':1}}])
     marks: 85
   }
 ]
+
+// sorting with marks in ascending order
 Assignment> db.student.aggregate([{'$sort':{'marks':1}}])
 [
   {
@@ -248,14 +262,8 @@ Assignment> db.student.aggregate([{'$sort':{'marks':1}}])
     marks: 95
   }
 ]
-Assignment> db.student.aggregate([{$group:{id:'$name',age:{$sort:"$age"}}}])
-MongoServerError: The field 'id' must be an accumulator object
-Assignment> db.student.aggregate([{$group:{_id:'$name',age:{$sort:"$age"}}}])
-MongoServerError: unknown group operator '$sort'
-Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$sort:"$marks"}}}])
-MongoServerError: unknown group operator '$sort'
-Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$marks:"$marks"}}}])
-MongoServerError: unknown group operator '$marks'
+
+using group and printing name and maximum marks
 Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$max:"$marks"}}}])
 [
   { _id: 'Ankit', marks: 85 },
@@ -266,6 +274,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$max:"$marks"}}}])
   { _id: 'Ashutosh', marks: 95 },
   { _id: 'Swapnil', marks: 92 }
 ]
+
+
 Assignment> db.student.insertOne({"roll":8,"name":"Shubham","age":18,"subject":"TOC","marks":80})
 {
   acknowledged: true,
@@ -276,6 +286,8 @@ Assignment> db.student.insertOne({"roll":9,"name":"Yash","age":25,"subject":"FDS
   acknowledged: true,
   insertedId: ObjectId("634ad2c14bb5b13ca322b6d4")
 }
+
+
 Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$max:"$marks"}}}])
 [
   { _id: 'Vivek', marks: 75 },
@@ -288,6 +300,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$max:"$marks"}}}])
   { _id: 'Aryan', marks: 90 },
   { _id: 'Asheesh', marks: 80 }
 ]
+
+// subject with maximum marks
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$max:"$marks"}}}])
 [
   { _id: 'DBMS', marks: 70 },
@@ -297,7 +311,10 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$max:"$marks"}}
   { _id: 'TOC', marks: 95 },
   { _id: 'SPM', marks: 75 },
   { _id: 'FDS', marks: 92 }
+  
 ]
+
+// subject with minimum marks
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$min:"$marks"}}}])
 [
   { _id: 'SPOS', marks: 85 },
@@ -308,6 +325,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$min:"$marks"}}
   { _id: 'OOP', marks: 80 },
   { _id: 'CNS', marks: 90 }
 ]
+
+//avg marks
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$avg:"$marks"}}}])
 [
   { _id: 'CNS', marks: 90 },
@@ -318,6 +337,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$avg:"$marks"}}
   { _id: 'TOC', marks: 87.5 },
   { _id: 'OOP', marks: 80 }
 ]
+
+// first--It gets the first document from the grouping
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$first:"$marks"}}}])
 [
   { _id: 'FDS', marks: 92 },
@@ -328,6 +349,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$first:"$marks"
   { _id: 'CNS', marks: 90 },
   { _id: 'SPM', marks: 75 }
 ]
+
+
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$last:"$marks"}}}])
 [
   { _id: 'SPOS', marks: 85 },
@@ -338,6 +361,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$last:"$marks"}
   { _id: 'OOP', marks: 80 },
   { _id: 'CNS', marks: 90 }
 ]
+
+//sum
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}}])
 [
   { _id: 'TOC', marks: 175 },
@@ -348,6 +373,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}
   { _id: 'CNS', marks: 90 },
   { _id: 'SPOS', marks: 85 }
 ]
+
+// count
 Assignment> db.student.aggregate([{$group:{_id:'$subject',count:{$sum:1}}}])
 [
   { _id: 'FDS', count: 2 },
@@ -358,36 +385,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',count:{$sum:1}}}])
   { _id: 'TOC', count: 2 },
   { _id: 'DBMS', count: 1 }
 ]
-Assignment> db.student.aggregate([{$group:{_id:'$name',sort:{$age:1}}}])
-MongoServerError: unknown group operator '$age'
-Assignment> db.student.aggregate([{$group:{_id:'$name',sort:{'age':1}}}])
-MongoServerError: The field 'sort' must be an accumulator object
-Assignment> db.student.aggregate([{$group:{_id:'$name',$sort:{'age':1}}}])
-MongoServerError: The field '$sort' must be an accumulator object
-Assignment> db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1}}}}])
-Uncaught:
-SyntaxError: Unexpected token (1:43)
 
-> 1 | db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1}}}}])
-    |                                            ^
-  2 |
-
-Assignment> db.student.aggregate([{$group:{_id:'$name'{$sort:{'age':1}}}}])
-Uncaught:
-SyntaxError: Unexpected token, expected "," (1:42)
-
-> 1 | db.student.aggregate([{$group:{_id:'$name'{$sort:{'age':1}}}}])
-    |                                           ^
-  2 |
-
-Assignment> db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1}}}}])
-Uncaught:
-SyntaxError: Unexpected token (1:43)
-
-> 1 | db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1}}}}])
-    |                                            ^
-  2 |
-
+//category wise printing
 Assignment> db.student.aggregate([{$group:{_id:"$subject",category:{$sum:1}}}])
 [
   { _id: 'FDS', category: 2 },
@@ -398,6 +397,9 @@ Assignment> db.student.aggregate([{$group:{_id:"$subject",category:{$sum:1}}}])
   { _id: 'TOC', category: 2 },
   { _id: 'DBMS', category: 1 }
 ]
+
+// match 
+
 Assignment> db.student.aggregate([{$match:{subject:"TOC"}}])
 [
   {
@@ -417,6 +419,8 @@ Assignment> db.student.aggregate([{$match:{subject:"TOC"}}])
     marks: 80
   }
 ]
+
+// match with constraints
 Assignment> db.student.aggregate([{$match:{age:{$gt:30}}}])
 [
   {
@@ -428,6 +432,8 @@ Assignment> db.student.aggregate([{$match:{age:{$gt:30}}}])
     marks: 85
   }
 ]
+
+
 Assignment> db.student.aggregate([{$match:{age:{$gt:20}}}])
 [
   {
@@ -479,23 +485,7 @@ Assignment> db.student.aggregate([{$match:{age:{$gt:20}}}])
     marks: 83
   }
 ]
-Assignment> db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1},{$limit:4}}}])
-Uncaught:
-SyntaxError: Unexpected token (1:43)
 
-> 1 | db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1},{$limit:4}}}])
-    |                                            ^
-  2 |
-
-Assignment> db.student.aggregate([{$group:{_id:'$name',sort:{'age':1}}}])
-MongoServerError: The field 'sort' must be an accumulator object
-Assignment> db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1}}}}])
-Uncaught:
-SyntaxError: Unexpected token (1:43)
-
-> 1 | db.student.aggregate([{$group:{_id:'$name',{$sort:{'age':1}}}}])
-    |                                            ^
-  2 |
 
 Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}}])
 [
@@ -507,40 +497,8 @@ Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}
   { _id: 'TOC', marks: 175 },
   { _id: 'DBMS', marks: 70 }
 ]
-Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"},{$limit:1}}])
-Uncaught:
-SyntaxError: Unexpected token (1:68)
 
-> 1 | db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"},{$limit:1}}])
-    |                                                                     ^
-  2 |
 
-Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"},{$limit:1}}}])
-Uncaught:
-SyntaxError: Unexpected token (1:68)
-
-> 1 | db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"},{$limit:1}}}])
-    |                                                                     ^
-  2 |
-
-Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}},{$l$limit:1}}])
-Uncaught:
-SyntaxError: Unexpected token (1:69)
-
-> 1 | db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}},{$limit:1}}])
-    |                                                                      ^
-  2 |
-
-Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}}])
-[
-  { _id: 'FDS', marks: 175 },
-  { _id: 'SPOS', marks: 85 },
-  { _id: 'TOC', marks: 175 },
-  { _id: 'DBMS', marks: 70 },
-  { _id: 'OOP', marks: 80 },
-  { _id: 'CNS', marks: 90 },
-  { _id: 'SPM', marks: 75 }
-]
 Assignment> db.student.aggregate([{$limit:1}])
 [
   {
