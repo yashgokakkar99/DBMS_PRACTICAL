@@ -1,1 +1,702 @@
+//Indexing-
+//to show all the databases
+
+test> show dbs
+admin   40.00 KiB
+book    80.00 KiB
+config  60.00 KiB
+local   80.00 KiB
+
+//to ue a database
+test> use book
+switched to db book
+
+//to show all the connections
+book> show collections
+library
+Library
+
+//creating a collection name student
+book> db.createCollection('student')
+{ ok: 1 }
+
+//inserting document in collection using insertOne
+book> db.student.insertOne({"name":"Aryan","language":"Java"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644c011bf6101d8529e05")
+}
+book> db.student.insertOne({"name":"Ashutosh","language":"Python"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644d011bf6101d8529e06")
+}
+book> db.student.insertOne({"name":"Aman","language":"C++"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644e411bf6101d8529e07")
+}
+book> db.student.insertOne({"name":"Swapnil","language":"C"})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634644f911bf6101d8529e08")
+}
+
+
+// to find all the document in the collection using find() function
+book> db.student.find().pretty()
+[
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  },
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  }
+]
+
+
+//  creating index
+book> db.student.createIndex({name:1})
+name_1
+
+// cfeating index with descending value
+book> db.student.createIndex({language:-1})
+language_-1
+
+// creating index on multiple key
+book> db.student.createIndex({name:1,language:-1})
+name_1_language_-1
+
+
+// droping a index
+book> db.student.dropIndex({language:-1})
+{ nIndexesWas: 4, ok: 1 }
+
+
+// tp get all the indexes use getIndexes function
+book> db.student.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' },
+  { v: 2, key: { name: 1, language: -1 }, name: 'name_1_language_-1' }
+]
+
+// sort according to name in asscending order
+book> db.student.find().sort({name:1})
+[
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  },
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  }
+]
+
+
+// sort name in descending order
+book> db.student.find().sort({name:-1})
+[
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  },
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  }
+]
+book> db.student.find().sort({language:-1})
+[
+  {
+    _id: ObjectId("634644d011bf6101d8529e06"),
+    name: 'Ashutosh',
+    language: 'Python'
+  },
+  {
+    _id: ObjectId("634644c011bf6101d8529e05"),
+    name: 'Aryan',
+    language: 'Java'
+  },
+  {
+    _id: ObjectId("634644e411bf6101d8529e07"),
+    name: 'Aman',
+    language: 'C++'
+  },
+  {
+    _id: ObjectId("634644f911bf6101d8529e08"),
+    name: 'Swapnil',
+    language: 'C'
+  }
+]
+
+
+
+book> db.student_details.createIndex({language:-1})
+language_-1
+book> db.student_details.find()
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+//Aggregation
+test> show dbs
+Assignment   72.00 KiB
+admin        40.00 KiB
+book        204.00 KiB
+config       72.00 KiB
+local        80.00 KiB
+
+
+test> use Assignment
+switched to db Assignment
+
+Assignment> show collections
+students
+
+Assignment> db.createCollection('student')
+
+
+Assignment> db.student.insertOne({"roll":1,"name":"Aman","age":20,"subject":"DBMS","marks":70})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad04a4bb5b13ca322b6cc")
+}
+Assignment> db.student.insertOne({"roll":2,"name":"Asheesh","age":21,"subject":"OOP","marks":80})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad0754bb5b13ca322b6cd")
+}
+Assignment> db.student.insertOne({"roll":3,"name":"Ankit","age":228,"subject":"SPOS","marks":85})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad0994bb5b13ca322b6ce")
+}
+Assignment> db.student.insertOne({"roll":4,"name":"Vivek","age":28,"subject":"SPM","marks":75})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad0b94bb5b13ca322b6cf")
+}
+Assignment> db.student.insertOne({"roll":5,"name":"Aryan","age":30,"subject":"CNS","marks":90})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad0d64bb5b13ca322b6d0")
+}
+Assignment> db.student.insertOne({"roll":6,"name":"Ashutosh","age":18,"subject":"TOC","marks":95})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad0f34bb5b13ca322b6d1")
+}
+Assignment> db.student.insertOne({"roll":7,"name":"Swapnil","age":27,"subject":"FDS","marks":92})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad11e4bb5b13ca322b6d2")
+}
+
+//printing
+
+Assignment> db.student.find()
+[
+  {
+    _id: ObjectId("634ad04a4bb5b13ca322b6cc"),
+    roll: 1,
+    name: 'Aman',
+    age: 20,
+    subject: 'DBMS',
+    marks: 70
+  },
+  {
+    _id: ObjectId("634ad0754bb5b13ca322b6cd"),
+    roll: 2,
+    name: 'Asheesh',
+    age: 21,
+    subject: 'OOP',
+    marks: 80
+  },
+  {
+    _id: ObjectId("634ad0994bb5b13ca322b6ce"),
+    roll: 3,
+    name: 'Ankit',
+    age: 228,
+    subject: 'SPOS',
+    marks: 85
+  },
+  {
+    _id: ObjectId("634ad0b94bb5b13ca322b6cf"),
+    roll: 4,
+    name: 'Vivek',
+    age: 28,
+    subject: 'SPM',
+    marks: 75
+  },
+  {
+    _id: ObjectId("634ad0d64bb5b13ca322b6d0"),
+    roll: 5,
+    name: 'Aryan',
+    age: 30,
+    subject: 'CNS',
+    marks: 90
+  },
+  {
+    _id: ObjectId("634ad0f34bb5b13ca322b6d1"),
+    roll: 6,
+    name: 'Ashutosh',
+    age: 18,
+    subject: 'TOC',
+    marks: 95
+  },
+  {
+    _id: ObjectId("634ad11e4bb5b13ca322b6d2"),
+    roll: 7,
+    name: 'Swapnil',
+    age: 27,
+    subject: 'FDS',
+    marks: 92
+  }
+]
+
+// sorting with age in ascending order
+
+Assignment> db.student.aggregate([{'$sort':{'age':1}}])
+[
+  {
+    _id: ObjectId("634ad0f34bb5b13ca322b6d1"),
+    roll: 6,
+    name: 'Ashutosh',
+    age: 18,
+    subject: 'TOC',
+    marks: 95
+  },
+  {
+    _id: ObjectId("634ad04a4bb5b13ca322b6cc"),
+    roll: 1,
+    name: 'Aman',
+    age: 20,
+    subject: 'DBMS',
+    marks: 70
+  },
+  {
+    _id: ObjectId("634ad0754bb5b13ca322b6cd"),
+    roll: 2,
+    name: 'Asheesh',
+    age: 21,
+    subject: 'OOP',
+    marks: 80
+  },
+  {
+    _id: ObjectId("634ad11e4bb5b13ca322b6d2"),
+    roll: 7,
+    name: 'Swapnil',
+    age: 27,
+    subject: 'FDS',
+    marks: 92
+  },
+  {
+    _id: ObjectId("634ad0b94bb5b13ca322b6cf"),
+    roll: 4,
+    name: 'Vivek',
+    age: 28,
+    subject: 'SPM',
+    marks: 75
+  },
+  {
+    _id: ObjectId("634ad0d64bb5b13ca322b6d0"),
+    roll: 5,
+    name: 'Aryan',
+    age: 30,
+    subject: 'CNS',
+    marks: 90
+  },
+  {
+    _id: ObjectId("634ad0994bb5b13ca322b6ce"),
+    roll: 3,
+    name: 'Ankit',
+    age: 228,
+    subject: 'SPOS',
+    marks: 85
+  }
+]
+
+// sorting with marks in ascending order
+Assignment> db.student.aggregate([{'$sort':{'marks':1}}])
+[
+  {
+    _id: ObjectId("634ad04a4bb5b13ca322b6cc"),
+    roll: 1,
+    name: 'Aman',
+    age: 20,
+    subject: 'DBMS',
+    marks: 70
+  },
+  {
+    _id: ObjectId("634ad0b94bb5b13ca322b6cf"),
+    roll: 4,
+    name: 'Vivek',
+    age: 28,
+    subject: 'SPM',
+    marks: 75
+  },
+  {
+    _id: ObjectId("634ad0754bb5b13ca322b6cd"),
+    roll: 2,
+    name: 'Asheesh',
+    age: 21,
+    subject: 'OOP',
+    marks: 80
+  },
+  {
+    _id: ObjectId("634ad0994bb5b13ca322b6ce"),
+    roll: 3,
+    name: 'Ankit',
+    age: 228,
+    subject: 'SPOS',
+    marks: 85
+  },
+  {
+    _id: ObjectId("634ad0d64bb5b13ca322b6d0"),
+    roll: 5,
+    name: 'Aryan',
+    age: 30,
+    subject: 'CNS',
+    marks: 90
+  },
+  {
+    _id: ObjectId("634ad11e4bb5b13ca322b6d2"),
+    roll: 7,
+    name: 'Swapnil',
+    age: 27,
+    subject: 'FDS',
+    marks: 92
+  },
+  {
+    _id: ObjectId("634ad0f34bb5b13ca322b6d1"),
+    roll: 6,
+    name: 'Ashutosh',
+    age: 18,
+    subject: 'TOC',
+    marks: 95
+  }
+]
+
+using group and printing name and maximum marks
+Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$max:"$marks"}}}])
+[
+  { _id: 'Ankit', marks: 85 },
+  { _id: 'Asheesh', marks: 80 },
+  { _id: 'Aman', marks: 70 },
+  { _id: 'Vivek', marks: 75 },
+  { _id: 'Aryan', marks: 90 },
+  { _id: 'Ashutosh', marks: 95 },
+  { _id: 'Swapnil', marks: 92 }
+]
+
+
+Assignment> db.student.insertOne({"roll":8,"name":"Shubham","age":18,"subject":"TOC","marks":80})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad2904bb5b13ca322b6d3")
+}
+Assignment> db.student.insertOne({"roll":9,"name":"Yash","age":25,"subject":"FDS","marks":83})
+{
+  acknowledged: true,
+  insertedId: ObjectId("634ad2c14bb5b13ca322b6d4")
+}
+
+
+Assignment> db.student.aggregate([{$group:{_id:'$name',marks:{$max:"$marks"}}}])
+[
+  { _id: 'Vivek', marks: 75 },
+  { _id: 'Ankit', marks: 85 },
+  { _id: 'Yash', marks: 83 },
+  { _id: 'Swapnil', marks: 92 },
+  { _id: 'Aman', marks: 70 },
+  { _id: 'Ashutosh', marks: 95 },
+  { _id: 'Shubham', marks: 80 },
+  { _id: 'Aryan', marks: 90 },
+  { _id: 'Asheesh', marks: 80 }
+]
+
+// subject with maximum marks
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$max:"$marks"}}}])
+[
+  { _id: 'DBMS', marks: 70 },
+  { _id: 'OOP', marks: 80 },
+  { _id: 'SPOS', marks: 85 },
+  { _id: 'CNS', marks: 90 },
+  { _id: 'TOC', marks: 95 },
+  { _id: 'SPM', marks: 75 },
+  { _id: 'FDS', marks: 92 }
+  
+]
+
+// subject with minimum marks
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$min:"$marks"}}}])
+[
+  { _id: 'SPOS', marks: 85 },
+  { _id: 'SPM', marks: 75 },
+  { _id: 'DBMS', marks: 70 },
+  { _id: 'TOC', marks: 80 },
+  { _id: 'FDS', marks: 83 },
+  { _id: 'OOP', marks: 80 },
+  { _id: 'CNS', marks: 90 }
+]
+
+//avg marks
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$avg:"$marks"}}}])
+[
+  { _id: 'CNS', marks: 90 },
+  { _id: 'DBMS', marks: 70 },
+  { _id: 'FDS', marks: 87.5 },
+  { _id: 'SPOS', marks: 85 },
+  { _id: 'SPM', marks: 75 },
+  { _id: 'TOC', marks: 87.5 },
+  { _id: 'OOP', marks: 80 }
+]
+
+// first--It gets the first document from the grouping
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$first:"$marks"}}}])
+[
+  { _id: 'FDS', marks: 92 },
+  { _id: 'SPOS', marks: 85 },
+  { _id: 'TOC', marks: 95 },
+  { _id: 'DBMS', marks: 70 },
+  { _id: 'OOP', marks: 80 },
+  { _id: 'CNS', marks: 90 },
+  { _id: 'SPM', marks: 75 }
+]
+
+
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$last:"$marks"}}}])
+[
+  { _id: 'SPOS', marks: 85 },
+  { _id: 'SPM', marks: 75 },
+  { _id: 'DBMS', marks: 70 },
+  { _id: 'TOC', marks: 80 },
+  { _id: 'FDS', marks: 83 },
+  { _id: 'OOP', marks: 80 },
+  { _id: 'CNS', marks: 90 }
+]
+
+//sum
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}}])
+[
+  { _id: 'TOC', marks: 175 },
+  { _id: 'SPM', marks: 75 },
+  { _id: 'FDS', marks: 175 },
+  { _id: 'OOP', marks: 80 },
+  { _id: 'DBMS', marks: 70 },
+  { _id: 'CNS', marks: 90 },
+  { _id: 'SPOS', marks: 85 }
+]
+
+// count
+Assignment> db.student.aggregate([{$group:{_id:'$subject',count:{$sum:1}}}])
+[
+  { _id: 'FDS', count: 2 },
+  { _id: 'OOP', count: 1 },
+  { _id: 'CNS', count: 1 },
+  { _id: 'SPM', count: 1 },
+  { _id: 'SPOS', count: 1 },
+  { _id: 'TOC', count: 2 },
+  { _id: 'DBMS', count: 1 }
+]
+
+//category wise printing
+Assignment> db.student.aggregate([{$group:{_id:"$subject",category:{$sum:1}}}])
+[
+  { _id: 'FDS', category: 2 },
+  { _id: 'OOP', category: 1 },
+  { _id: 'CNS', category: 1 },
+  { _id: 'SPM', category: 1 },
+  { _id: 'SPOS', category: 1 },
+  { _id: 'TOC', category: 2 },
+  { _id: 'DBMS', category: 1 }
+]
+
+// match 
+
+Assignment> db.student.aggregate([{$match:{subject:"TOC"}}])
+[
+  {
+    _id: ObjectId("634ad0f34bb5b13ca322b6d1"),
+    roll: 6,
+    name: 'Ashutosh',
+    age: 18,
+    subject: 'TOC',
+    marks: 95
+  },
+  {
+    _id: ObjectId("634ad2904bb5b13ca322b6d3"),
+    roll: 8,
+    name: 'Shubham',
+    age: 18,
+    subject: 'TOC',
+    marks: 80
+  }
+]
+
+// match with constraints
+Assignment> db.student.aggregate([{$match:{age:{$gt:30}}}])
+[
+  {
+    _id: ObjectId("634ad0994bb5b13ca322b6ce"),
+    roll: 3,
+    name: 'Ankit',
+    age: 228,
+    subject: 'SPOS',
+    marks: 85
+  }
+]
+
+
+Assignment> db.student.aggregate([{$match:{age:{$gt:20}}}])
+[
+  {
+    _id: ObjectId("634ad0754bb5b13ca322b6cd"),
+    roll: 2,
+    name: 'Asheesh',
+    age: 21,
+    subject: 'OOP',
+    marks: 80
+  },
+  {
+    _id: ObjectId("634ad0994bb5b13ca322b6ce"),
+    roll: 3,
+    name: 'Ankit',
+    age: 228,
+    subject: 'SPOS',
+    marks: 85
+  },
+  {
+    _id: ObjectId("634ad0b94bb5b13ca322b6cf"),
+    roll: 4,
+    name: 'Vivek',
+    age: 28,
+    subject: 'SPM',
+    marks: 75
+  },
+  {
+    _id: ObjectId("634ad0d64bb5b13ca322b6d0"),
+    roll: 5,
+    name: 'Aryan',
+    age: 30,
+    subject: 'CNS',
+    marks: 90
+  },
+  {
+    _id: ObjectId("634ad11e4bb5b13ca322b6d2"),
+    roll: 7,
+    name: 'Swapnil',
+    age: 27,
+    subject: 'FDS',
+    marks: 92
+  },
+  {
+    _id: ObjectId("634ad2c14bb5b13ca322b6d4"),
+    roll: 9,
+    name: 'Yash',
+    age: 25,
+    subject: 'FDS',
+    marks: 83
+  }
+]
+
+
+Assignment> db.student.aggregate([{$group:{_id:'$subject',marks:{$sum:"$marks"}}}])
+[
+  { _id: 'FDS', marks: 175 },
+  { _id: 'OOP', marks: 80 },
+  { _id: 'CNS', marks: 90 },
+  { _id: 'SPM', marks: 75 },
+  { _id: 'SPOS', marks: 85 },
+  { _id: 'TOC', marks: 175 },
+  { _id: 'DBMS', marks: 70 }
+]
+
+
+Assignment> db.student.aggregate([{$limit:1}])
+[
+  {
+    _id: ObjectId("634ad04a4bb5b13ca322b6cc"),
+    roll: 1,
+    name: 'Aman',
+    age: 20,
+    subject: 'DBMS',
+    marks: 70
+  }
+]
+Assignment> db.student.aggregate([{$limit:4}])
+[
+  {
+    _id: ObjectId("634ad04a4bb5b13ca322b6cc"),
+    roll: 1,
+    name: 'Aman',
+    age: 20,
+    subject: 'DBMS',
+    marks: 70
+  },
+  {
+    _id: ObjectId("634ad0754bb5b13ca322b6cd"),
+    roll: 2,
+    name: 'Asheesh',
+    age: 21,
+    subject: 'OOP',
+    marks: 80
+  },
+  {
+    _id: ObjectId("634ad0994bb5b13ca322b6ce"),
+    roll: 3,
+    name: 'Ankit',
+    age: 228,
+    subject: 'SPOS',
+    marks: 85
+  },
+  {
+    _id: ObjectId("634ad0b94bb5b13ca322b6cf"),
+    roll: 4,
+    name: 'Vivek',
+    age: 28,
+    subject: 'SPM',
+    marks: 75
+  }
+]
+Assignment>
 
