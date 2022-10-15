@@ -134,5 +134,22 @@ Assignment> db.students.aggregate([{'$sort': {'age': 1}}])
 ]
 Assignment>
 
-
+Assignment> db.students.aggregate([{$group:{_id:'$name',age:{$avg:"$age"}}}])
+[
+  { _id: 'Aman', age: 20 },
+  { _id: 'Anil', age: 21 },
+  { _id: 'Asheesh', age: 22 },
+  { _id: 'Aryan', age: 30 },
+  { _id: 'Swapnil', age: 37 },
+  { _id: 'Shubham', age: 34 }
+]
+Assignment> db.students.aggregate([{$group:{_id:'$name',age:{$first:"$age"}}}])
+[
+  { _id: 'Aman', age: 20 },
+  { _id: 'Anil', age: 21 },
+  { _id: 'Asheesh', age: 22 },
+  { _id: 'Aryan', age: 30 },
+  { _id: 'Swapnil', age: 37 },
+  { _id: 'Shubham', age: 34 }
+]
 
